@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+<group android:checkableBehavior="single"
+    >
+    <item
+        android:id="@+id/item_message"
+        android:icon="@drawable/icon_message"
+        android:title="消息"
+        />
+    <item
+        android:id="@+id/item_apply"
+        android:icon="@drawable/icon_apply"
+        android:title="我的申请"
+        />
+    <item
+        android:id="@+id/item_collection"
+        android:icon="@drawable/icon_collection"
+        android:title="收藏"
+        />
+    <item
+        android:id="@+id/item_data"
+        android:icon="@drawable/icon_data"
+        android:title="完善个人资料"
+        />
+    <item
+        android:id="@+id/item_hostory"
+        android:icon="@drawable/icon_history"
+        android:title="历史记录"
+        />
+    <item
+        android:id="@+id/item_set"
+        android:icon="@drawable/icon_setting"
+        android:title="设置"
+        />
+    <item
+        android:id="@+id/item_about"
+        android:icon="@drawable/icon_about"
+        android:title="关于我们"
+        />
+</group>
+</menu>

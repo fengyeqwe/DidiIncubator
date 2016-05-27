@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@android:drawable/edit_text"
+        android:gravity="center_vertical"
+        android:hint="输入用户名或邮箱"
+        android:textColorHint="#999"
+        android:textScaleX="1" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/username"
+        android:background="@android:drawable/edit_text"
+        android:gravity="center_vertical"
+        android:hint="输入密码"
+        android:textColorHint="#999"
+        android:textScaleX="1" />
+
+    <Button
+        android:id="@+id/zhuce"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/shape"
+        android:text="注册"
+        android:textColor="#FFF"
+        android:textSize="18dp" />
+
+<TextView
+    android:id="@+id/tongyi"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="点击上面的按钮即表示您同意"
+    android:layout_centerHorizontal="true"
+    android:layout_below="@+id/zhuce"
+    android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/fuwuxieyi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="《滴滴孵化器软件许可及服务协议》"
+        android:layout_below="@+id/tongyi"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorPrimary"
+        android:background="@android:color/transparent"
+        android:layout_centerHorizontal="true"
+        />
+</RelativeLayout>
