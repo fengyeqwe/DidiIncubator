@@ -18,11 +18,11 @@
         android:icon="@drawable/icon_collection"
         android:title="收藏"
         />
-    <item
+   <!-- <item
         android:id="@+id/item_data"
         android:icon="@drawable/icon_data"
         android:title="完善个人资料"
-        />
+        />-->
     <item
         android:id="@+id/item_hostory"
         android:icon="@drawable/icon_history"

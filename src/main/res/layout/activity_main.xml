@@ -15,6 +15,13 @@
             android:layout_height="match_parent"
             android:clickable="true" />
         <include layout="@layout/map_marker"/>
+        <ImageView
+            android:id="@+id/egg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/egg2"
+            android:layout_alignParentBottom="true"
+            />
     </RelativeLayout>
 
     <LinearLayout
@@ -33,6 +40,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
+            <EditText
+                android:id="@+id/suosou"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:text="请输入孵化器的名字"
+                android:drawableLeft="@drawable/serach"
+                android:background="@drawable/edit_sousuo"
+
+                />
         </FrameLayout>
     </LinearLayout>
     <android.support.design.widget.NavigationView

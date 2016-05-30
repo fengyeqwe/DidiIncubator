@@ -78,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerToggle;
 
+    //点击蛋显示孵化器列表
+    ImageView eggImageView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,11 +110,10 @@ public class MainActivity extends AppCompatActivity {
         initData();//初始化
         initOverlay(list);
         initMarkerListener();//监听事件
-
+        initEggListener();//监听主界面蛋的点击事件，显示附近孵化器列表
 
 
     }
-
 
 
     private void initView() {
@@ -130,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         labelDescriptor= BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
         relativeLayout= (RelativeLayout) findViewById(R.id.rl_marker);
 
-
+        eggImageView= (ImageView) findViewById(R.id.egg);
 
     }
     private void initData() {
@@ -312,6 +314,7 @@ public class MainActivity extends AppCompatActivity {
                 tv_number.setText(info.getNumber()+"");
                 tv_distance.setText(info.getDistance());
                 relativeLayout.setVisibility(View.VISIBLE);
+                eggImageView.setVisibility(View.GONE);
                 //定义标注物提示窗口
                 InfoWindow infoWindow;
                 //设置窗口内容
@@ -337,6 +340,7 @@ public class MainActivity extends AppCompatActivity {
                 int event = motionEvent.getAction();
                 if (event == MotionEvent.ACTION_DOWN) {
                     relativeLayout.setVisibility(View.GONE);
+                    eggImageView.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -353,29 +357,21 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.item_apply:
                         //TODO 菜单选项
-                      // startActivity(new Intent(MainActivity.this,ApplyActivity.class));
+                       //startActivity(new Intent(MainActivity.this,ApplyActivity.class));
                         //toolbar.setTitle("我的申请");
                         //finish();
                         break;
                     case R.id.item_collection:
                         startActivity(new Intent(MainActivity.this,CollectionActivity.class));
-                        //toolbar.setTitle("收藏");
-                        //finish();
                         break;
                     case R.id.item_hostory:
                         startActivity(new Intent(MainActivity.this,HistoryActivity.class));
-                        //toolbar.setTitle("历史记录");
-                        //finish();
                         break;
                     case R.id.item_set:
                         startActivity(new Intent(MainActivity.this,SetActivity.class));
-                        //toolbar.setTitle("历史记录");
-                            //finish();
                         break;
                     case R.id.item_about:
                         startActivity(new Intent(MainActivity.this,AboutActivity.class));
-                        //toolbar.setTitle("历史记录");
-                        //finish();
                         break;
                 }
                 item.setChecked(true);
@@ -392,19 +388,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //Inflate()作用就是将xml定义的一个布局找出来,但仅仅是找出来而且隐藏的,没有找到的同时并显示功能
-        getMenuInflater().inflate(R.menu.main,menu);
-        return true;
+        //蛋的点击事件
+    private void initEggListener() {
+        eggImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v.isClickable()){
+                    Toast.makeText(MainActivity.this, "点击了我", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.map_common:
-                Toast.makeText(this, "更多", Toast.LENGTH_SHORT).show();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

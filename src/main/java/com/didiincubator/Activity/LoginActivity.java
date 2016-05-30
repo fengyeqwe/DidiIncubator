@@ -306,6 +306,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public void testLogin(View view) {
         Intent intent=new Intent(LoginActivity.this,MainActivity.class);
         startActivity(intent);
+        finish();
 
     }
     private void loginRongIM() {

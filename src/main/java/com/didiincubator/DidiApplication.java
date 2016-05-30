@@ -3,6 +3,7 @@ package com.didiincubator;
 import android.app.Application;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.yolanda.nohttp.NoHttp;
 
 import io.rong.imkit.RongIM;
 
@@ -15,5 +16,6 @@ public class DidiApplication extends Application {
         super.onCreate();
         SDKInitializer.initialize(this);
         RongIM.init(this);
+        NoHttp.init(this);
     }
 }
