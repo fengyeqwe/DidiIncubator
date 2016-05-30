@@ -1,4 +1,4 @@
-package com.didiincubator;
+package com.didiincubator.utils;
 
 import android.app.Application;
 

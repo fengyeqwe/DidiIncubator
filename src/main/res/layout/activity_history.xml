@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.didiincubator.incubator.HistoryActivity">
+    tools:context="com.didiincubator.Activity.HistoryActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,9 +27,10 @@
             android:textStyle="bold"
             />
     </LinearLayout>
-    <ListView
-        android:id="@+id/history_listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
+
+   <ExpandableListView
+       android:id="@+id/history_list"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+   </ExpandableListView>
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.didiincubator.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -40,8 +41,12 @@ import com.baidu.mapapi.model.LatLng;
 import com.didiincubator.Beans.InMapInfo;
 import com.didiincubator.R;
 import com.didiincubator.View.DetailActivity;
+import com.didiincubator.utils.HistoryHelper;
+import com.didiincubator.utils.HistoryTable;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import io.rong.imkit.RongIM;
@@ -77,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerToggle;
+
+    //声明数据库操作类
+    SQLiteDatabase mDataBase;
+    //声明数据库辅助类对象
+    HistoryHelper mHistoryHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -129,7 +139,8 @@ public class MainActivity extends AppCompatActivity {
 
         labelDescriptor= BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
         relativeLayout= (RelativeLayout) findViewById(R.id.rl_marker);
-
+        //初始化historyHelper
+        mHistoryHelper=new HistoryHelper(MainActivity.this);
 
 
     }
@@ -386,8 +397,26 @@ public class MainActivity extends AppCompatActivity {
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent=new Intent(MainActivity.this, DetailActivity.class);
                 startActivity(intent);
+                addhistory();//点击孵化器时，向sqlite添加历史记录
+            }
+
+            private void addhistory() {
+                //获取当前系统时间
+                Calendar c=Calendar.getInstance();
+                String time=c.get(Calendar.YEAR)+"年"+(c.get(Calendar.MONTH)+1)+"月"+c.get(Calendar.DAY_OF_MONTH)+"日";
+                Integer didi_id=1;//点击的孵化器id，未完成
+
+                //使用getReadableDataBase ，内存不足时，不会抛出异常
+                mDataBase=mHistoryHelper.getReadableDatabase();
+                String sql="insert into "+ HistoryTable.Field.TABLE_NAME+
+                        " ("+HistoryTable.Field.HISTORY_DIDI_ID+","+HistoryTable.Field.HISTORY_TIME+")values ("+
+                        didi_id+",'"+time+"')";
+                mDataBase.execSQL(sql);
+                mDataBase.close();
+
             }
         });
     }
