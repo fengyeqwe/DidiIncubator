@@ -47,7 +47,7 @@
         android:layout_height="40dp"
         android:layout_below="@+id/mima"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/shape"
         android:text="登录" />
 
@@ -85,7 +85,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_below="@id/otherway"
-        android:layout_marginLeft="135dp"
+       android:layout_toRightOf="@+id/jizhumima"
         android:background="@android:color/transparent"
         android:src="@drawable/qq" />
 
@@ -94,13 +94,52 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_below="@id/otherway"
-        android:layout_marginRight="135dp"
-        android:layout_toRightOf="@id/qqdenglu"
+
+       android:layout_toLeftOf="@+id/zidongdenglukuang"
         android:background="@android:color/transparent"
         android:src="@drawable/weibo" />
-    <Button
+
+    <CheckBox
+        android:id="@+id/jizhumimakuang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="测试"
-        android:onClick="testLogin"/>
+        android:layout_below="@+id/mima"
+        android:layout_marginTop="9sp"
+       android:layout_alignLeft="@+id/denglu"
+        />
+
+    <TextView
+        android:id="@+id/jizhumima"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="记住密码"
+       android:layout_toRightOf="@+id/jizhumimakuang"
+        android:layout_below="@+id/mima"
+        android:layout_marginLeft="10dp"
+        android:textSize="16sp"
+        android:layout_marginTop="15dp"
+        android:textColor="#999"
+        />
+
+    <CheckBox
+        android:id="@+id/zidongdenglukuang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mima"
+        android:layout_marginTop="9sp"
+        android:layout_toLeftOf="@+id/zidongdenglu"
+        />
+
+    <TextView
+        android:id="@+id/zidongdenglu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="自动登录"
+        android:layout_alignRight="@+id/denglu"
+        android:layout_below="@+id/mima"
+        android:layout_marginLeft="10dp"
+        android:textSize="16sp"
+        android:layout_marginTop="15dp"
+        android:textColor="#999"
+        />
 </RelativeLayout>
