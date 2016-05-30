@@ -50,7 +50,7 @@ public class ApplyActivity extends AppCompatActivity implements IApplyView{
                 break;
             case R.id.apply_submit:
                 submitApply();
-                //��ת���ҵ�����ҳ��
+                //跳转申请页
                 Intent intent=new Intent(ApplyActivity.this,MyApplyActivity.class);
                 startActivity(intent);
                 break;

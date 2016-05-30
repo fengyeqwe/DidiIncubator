@@ -2,6 +2,7 @@ package com.didiincubator.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -40,12 +40,15 @@ import com.baidu.mapapi.model.LatLng;
 import com.didiincubator.Beans.InMapInfo;
 import com.didiincubator.R;
 import com.didiincubator.View.DetailActivity;
+import com.didiincubator.utils.HistoryHelper;
+import com.didiincubator.utils.HistoryTable;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
+
 
 public class MainActivity extends AppCompatActivity {
     Context context;
@@ -78,8 +81,15 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerToggle;
 
+<<<<<<< HEAD
     //点击蛋显示孵化器列表
     ImageView eggImageView;
+=======
+    //声明数据库操作类
+    SQLiteDatabase mDataBase;
+    //声明数据库辅助类对象
+    HistoryHelper mHistoryHelper;
+>>>>>>> 8552c26e00b8f06171e1f8b4d36d0c2ccd5663b2
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -131,8 +141,14 @@ public class MainActivity extends AppCompatActivity {
 
         labelDescriptor= BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
         relativeLayout= (RelativeLayout) findViewById(R.id.rl_marker);
+<<<<<<< HEAD
 
         eggImageView= (ImageView) findViewById(R.id.egg);
+=======
+        //初始化historyHelper
+        mHistoryHelper=new HistoryHelper(MainActivity.this);
+
+>>>>>>> 8552c26e00b8f06171e1f8b4d36d0c2ccd5663b2
 
     }
     private void initData() {
@@ -382,8 +398,26 @@ public class MainActivity extends AppCompatActivity {
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent=new Intent(MainActivity.this, DetailActivity.class);
                 startActivity(intent);
+                addhistory();//点击孵化器时，向sqlite添加历史记录
+            }
+
+            private void addhistory() {
+                //获取当前系统时间
+                Calendar c=Calendar.getInstance();
+                String time=c.get(Calendar.YEAR)+"年"+(c.get(Calendar.MONTH)+1)+"月"+c.get(Calendar.DAY_OF_MONTH)+"日";
+                Integer didi_id=1;//点击的孵化器id，未完成
+
+                //使用getReadableDataBase ，内存不足时，不会抛出异常
+                mDataBase=mHistoryHelper.getReadableDatabase();
+                String sql="insert into "+ HistoryTable.Field.TABLE_NAME+
+                        " ("+HistoryTable.Field.HISTORY_DIDI_ID+","+HistoryTable.Field.HISTORY_TIME+")values ("+
+                        didi_id+",'"+time+"')";
+                mDataBase.execSQL(sql);
+                mDataBase.close();
+
             }
         });
     }

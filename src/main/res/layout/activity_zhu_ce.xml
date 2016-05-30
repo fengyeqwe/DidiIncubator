@@ -19,7 +19,7 @@
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/username"
+        android:layout_below="@id/username"
         android:background="@android:drawable/edit_text"
         android:gravity="center_vertical"
         android:hint="输入密码"

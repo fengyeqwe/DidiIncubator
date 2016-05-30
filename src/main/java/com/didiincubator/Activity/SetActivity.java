@@ -17,8 +17,9 @@ import com.didiincubator.manager.DataCleanManager;
 public class SetActivity extends AppCompatActivity {
     public  final  static  String FILEPATH="com.didiincubator";
     ImageView imageSet;
-    CheckBox checkUpdate,checkSend;
-    TextView textClearJL,textClearHC;
+    CheckBox checkUpdate, checkSend;
+    TextView textClearJL, textClearHC;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,11 +29,12 @@ public class SetActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        imageSet= (ImageView) findViewById(R.id.set_back);
-        checkUpdate= (CheckBox) findViewById(R.id.set_update);
-        checkSend= (CheckBox) findViewById(R.id.set_sendMessage);
-        textClearJL= (TextView) findViewById(R.id.set_clearSouSuo);
-        textClearHC= (TextView) findViewById(R.id.set_clearHc);
+
+        imageSet = (ImageView) findViewById(R.id.set_back);
+        checkUpdate = (CheckBox) findViewById(R.id.set_update);
+        checkSend = (CheckBox) findViewById(R.id.set_sendMessage);
+        textClearJL = (TextView) findViewById(R.id.set_clearSouSuo);
+        textClearHC = (TextView) findViewById(R.id.set_clearHc);
     }
 
     //返回
@@ -40,8 +42,8 @@ public class SetActivity extends AppCompatActivity {
         imageSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v.isClickable()){
-                    startActivity(new Intent(SetActivity.this,MainActivity.class));
+                if (v.isClickable()) {
+                    startActivity(new Intent(SetActivity.this, MainActivity.class));
                     finish();
                 }
             }
