@@ -12,13 +12,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.didiincubator.Presenter.DetailPresenter;
 import com.didiincubator.R;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMusic;
+import com.umeng.socialize.sso.QZoneSsoHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -90,6 +93,10 @@ public class DetailActivity extends AppCompatActivity implements IdetailVIew  {
     private List<Integer> imgList;
     private DetailPresenter mPresenter;
 
+
+    // 整个平台的Controller,负责管理整个SDK的配置、操作等处理
+    UMSocialService mController = UMServiceFactory
+            .getUMSocialService("com.umeng.share");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,8 +106,43 @@ public class DetailActivity extends AppCompatActivity implements IdetailVIew  {
         initView();
         initData();
         initAdapter();
+        setShareContent();
        // mPresenter.loadUI();//网络请求获的数据空指针
     }
+
+    private void setShareContent() {
+
+        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(DetailActivity.this
+                , "1105330645", "qizrvnP5AuHIs2ks");
+        qZoneSsoHandler.addToSocialSDK();
+        //mController.setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能");
+        //  mController.setShareMedia(new UMImage(this, "http://www.umeng.com/images/pic/banner_module_social.png"));
+        // mController.setShareMedia(new UMusic("http://sns.whalecloud.com/test_music.mp3"));
+//图片
+        // UMImage localimage=new UMImage(this,R.drawable.qq);
+        UMImage urlimage = new UMImage(this, "http://www.umeng.com/images/pic/social/integrated_3.png");
+
+// 设置分享音乐
+        UMusic uMusic = new UMusic("http://music.huoxing.com/upload/20130330/1364651263157_1085.mp3");
+        uMusic.setAuthor("GuGu");
+        uMusic.setTitle("天籁之音");
+// 设置音乐缩略图
+        uMusic.setThumb(urlimage);
+        mController.setShareMedia(uMusic);
+
+
+/*
+//设置分享视频
+        UMVideo umVideo = new UMVideo(
+                "http://v.youku.com/v_show/id_XNTE5ODAwMDM2.html?f=19001023");
+        //设置视频缩略图
+        umVideo.setThumb("http://www.umeng.com/images/pic/banner_module_social.png");
+        umVideo.setTitle("友盟社会化分享!");
+        mController.setShareMedia(umVideo);
+*/
+    }
+
+
 
 
     private void initAdapter() {
@@ -175,12 +217,17 @@ public class DetailActivity extends AppCompatActivity implements IdetailVIew  {
             case R.id.details_message:
                 RongIM.getInstance().startPrivateChat(DetailActivity.this,"362970502","chat");
                 break;
-            case R.id.details_share:
+            case R.id.details_share://第三方分享
+                share();
                 break;
             case R.id.details_in:
                 goApply();
                 break;
         }
+    }
+
+    private void share() {
+        mController.openShare(this, false);
     }
 
     private void goApply() {

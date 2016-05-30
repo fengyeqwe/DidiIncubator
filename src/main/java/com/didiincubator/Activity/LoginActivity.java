@@ -2,10 +2,14 @@ package com.didiincubator.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -36,8 +40,11 @@ import io.rong.imlib.RongIMClient;
 
 
 public class LoginActivity extends Activity implements View.OnClickListener {
-    String uname2;
-    String upass2;
+
+    SharedPreferences sp;
+    //AutoCompleteTextView username2;
+    CheckBox jizhumimaButton;
+    CheckBox zidongdengluButton;
     Button dengluButton;
     EditText username2;
     EditText password2;
@@ -58,19 +65,45 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_login);
         //初始化sdk
         SMSSDK.initSDK(this, APPKey, AppSecret, true);
-        //配置信息
+        //创建实例对象
+        sp = this.getSharedPreferences("passwordFile", MODE_PRIVATE);
+        zidongdengluButton = (CheckBox) findViewById(R.id.zidongdenglukuang);
+        jizhumimaButton = (CheckBox) findViewById(R.id.jizhumimakuang);
         mBtnBindPhone = (Button) findViewById(R.id.shoujidenglu);
         sinaLoginButton = (ImageButton) findViewById(R.id.wbdenglu);
         qqLoginButton = (ImageButton) findViewById(R.id.qqdenglu);
         zhuceButton = (Button) findViewById(R.id.lijizhuce);
         dengluButton = (Button) findViewById(R.id.denglu);
-        username2 = (EditText) findViewById(R.id.username);
-        password2 = (EditText) findViewById(R.id.password);
+        username2 = (EditText) findViewById(R.id.zhanghao);
+        password2 = (EditText) findViewById(R.id.mima);
+        jizhumimaButton.setOnClickListener(this);
+        zidongdengluButton.setOnClickListener(this);
         sinaLoginButton.setOnClickListener(this);
         qqLoginButton.setOnClickListener(this);
         mBtnBindPhone.setOnClickListener(this);
         zhuceButton.setOnClickListener(this);
         dengluButton.setOnClickListener(this);
+        //判断记住密码多选框的状态
+        if (sp.getBoolean("ISCHECK", false)) {
+            //设置默认是记录密码状态
+            jizhumimaButton.setChecked(true);
+            username2.setText(sp.getString("USER_NAME", ""));
+            password2.setText(sp.getString("PASSWORD", ""));
+            //判断自动登陆多选框状态
+            if (sp.getBoolean("AUTO_ISCHECK", false)) {
+                //设置默认是自动登录状态
+                zidongdengluButton.setChecked(true);
+                //跳转界面
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                LoginActivity.this.startActivity(intent);
+            }
+        }
+
+     /*   username2.setThreshold(1);// 输入1个字母就开始自动提示*/
+        password2.setInputType(InputType.TYPE_CLASS_TEXT
+                | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        // 隐藏密码为InputType.TYPE_TEXT_VARIATION_PASSWORD，也就是0x81
+        // 显示密码为InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD，也就是0x91
         loginRongIM();//连接融云
 
         /*Intent data = getIntent();		// 获取 Intent
@@ -84,7 +117,29 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         configPlatforms();
         // 设置分享的内容
         setShareContent();
+        /*//首字母提示
+        username2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String[] allUserName = new String[sp.getAll().size()];
+                allUserName = sp.getAll().keySet().toArray(new String[0]);
+                // sp.getAll()返回一张hash map
+                // keySet()得到的是a set of the keys.
+                // hash map是由key-value组成的
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(LoginActivity.this, android.R.layout.simple_dropdown_item_1line, allUserName);
+                username2.setAdapter(adapter);// 设置数据适配器
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                password2.setText(sp.getString(username2.getText().toString(), ""));// 自动输入密码
+            }
+        });*/
     }
 
     /**
@@ -188,7 +243,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         mController.getPlatformInfo(LoginActivity.this, platform, new SocializeListeners.UMDataListener() {
             @Override
             public void onStart() {
-
+                Intent intent = new Intent();
+                intent.setClass(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
             }
 
             @Override
@@ -249,17 +306,33 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.denglu:
+                String uname2 = username2.getText().toString();
+                String upass2 = password2.getText().toString();
                 if (TextUtils.isEmpty(uname2) || TextUtils.isEmpty(upass2)) {
                     Toast.makeText(this, "用户名密码不能为空！", Toast.LENGTH_SHORT).show();
-                } else {
+                    //假设默认用户名为fei，密码为123
+                } else if (uname2.equals("fei") && upass2.equals("123")) {
                     Toast.makeText(this, "登录成功！", Toast.LENGTH_SHORT).show();
+                    //登陆成功且记住密码框选中才会保存用户信息
+                    if (jizhumimaButton.isChecked()) {
+                        //记住用户名密码
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("USER_NAME", uname2);
+                        editor.putString("PASSWORD", upass2);
+                        editor.commit();
+                    }
+                    //跳转界面
+                    Intent intent = new Intent();
+                    intent.setClass(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "用户名或密码错误", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.lijizhuce:
                 Intent intent = new Intent();
                 intent.setClass(LoginActivity.this, ZhuCeActivity.class);
                 startActivity(intent);
-
                 break;
             case R.id.qqdenglu:
                 login(SHARE_MEDIA.QQ);
@@ -304,10 +377,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     public void testLogin(View view) {
-        Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
 
     }
+
     private void loginRongIM() {
         String Token = "4wcFE8VSqaANqagxr5aPfMu90HFlJJMTczluFD70cwzAXQJUxaGI37ul0pG30J1SSWdb8pdC6btb0DL7DzDZJuzlESegJ1i2";
         RongIM.connect(Token, new RongIMClient.ConnectCallback() {
@@ -327,6 +401,33 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 android.util.Log.e("MainActivity", "onError__________" + errorCode);
             }
         });
+        //监听记住密码框按钮事件
+        jizhumimaButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (jizhumimaButton.isChecked()) {
+                    System.out.println("记住密码已选中");
+                    sp.edit().putBoolean("ISCHECK", true).commit();
+                } else {
+                    System.out.println("记住密码未选中");
+                    sp.edit().putBoolean("ISCHECK", false).commit();
+                }
+            }
+        });
+        //监听自动登录按钮事件
+        zidongdengluButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (zidongdengluButton.isChecked()) {
+                    System.out.println("自动登录已选中");
+                    sp.edit().putBoolean("AUTO_ISCHECK", true).commit();
+                } else {
+                    System.out.println("自动登录未选中");
+                    sp.edit().putBoolean("AUTO_ISCHECK", false).commit();
+                }
+            }
+        });
     }
 
-    }
+
+}
