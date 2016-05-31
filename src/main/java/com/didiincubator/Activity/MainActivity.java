@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,10 +39,10 @@ import com.baidu.mapapi.model.LatLng;
 import com.didiincubator.Beans.InMapInfo;
 import com.didiincubator.R;
 import com.didiincubator.View.DetailActivity;
+import com.didiincubator.View.HistoryActivity;
 import com.didiincubator.utils.HistoryHelper;
 import com.didiincubator.utils.HistoryTable;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -79,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerToggle;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> fc187efa990c4452ceb077917b97b62b249b3a82
     //点击蛋显示孵化器列表
     ImageView eggImageView;
 
@@ -137,9 +140,21 @@ public class MainActivity extends AppCompatActivity {
         baiduMap.setMapStatus(factory);
         labelDescriptor= BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
         relativeLayout= (RelativeLayout) findViewById(R.id.rl_marker);
+<<<<<<< HEAD
         eggImageView= (ImageView) findViewById(R.id.egg);
         //初始化historyHelper
         mHistoryHelper=new HistoryHelper(MainActivity.this);
+=======
+
+
+        eggImageView= (ImageView) findViewById(R.id.egg);
+
+        //初始化historyHelper
+        mHistoryHelper=new HistoryHelper(MainActivity.this);
+
+
+
+>>>>>>> fc187efa990c4452ceb077917b97b62b249b3a82
     }
     private void initData() {
             list=new ArrayList<>();
