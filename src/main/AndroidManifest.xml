@@ -67,7 +67,7 @@
         </activity>
         <activity android:name=".Activity.DataActivity">
         </activity>
-        <activity android:name=".Activity.HistoryActivity">
+        <activity android:name=".View.HistoryActivity">
         </activity>
         <activity android:name=".Activity.MessageActivity">
         </activity>
