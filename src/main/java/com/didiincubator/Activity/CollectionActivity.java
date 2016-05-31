@@ -11,9 +11,10 @@ import android.widget.ListView;
 
 import com.didiincubator.Adapter.CollectionAdapter;
 import com.didiincubator.Beans.Incubator;
-import com.didiincubator.DidiApplication;
+
 import com.didiincubator.R;
 import com.didiincubator.listener.CollectionListener;
+import com.didiincubator.utils.DidiApplication;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;

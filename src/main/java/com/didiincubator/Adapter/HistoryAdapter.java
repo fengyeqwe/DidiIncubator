@@ -98,7 +98,7 @@ public class HistoryAdapter implements ExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         TextView textView = getTextView();
-        String text=didis.get(groupPosition).get(childPosition).getId()+"孵化器";
+        String text=didis.get(groupPosition).get(childPosition).getId()+"孵化器";//测试用语句
         textView.setText(text);
 
         return textView;

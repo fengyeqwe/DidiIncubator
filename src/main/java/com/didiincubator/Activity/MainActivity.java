@@ -81,15 +81,15 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerToggle;
 
-<<<<<<< HEAD
+
     //点击蛋显示孵化器列表
     ImageView eggImageView;
-=======
+
     //声明数据库操作类
     SQLiteDatabase mDataBase;
     //声明数据库辅助类对象
     HistoryHelper mHistoryHelper;
->>>>>>> 8552c26e00b8f06171e1f8b4d36d0c2ccd5663b2
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -141,14 +141,14 @@ public class MainActivity extends AppCompatActivity {
 
         labelDescriptor= BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
         relativeLayout= (RelativeLayout) findViewById(R.id.rl_marker);
-<<<<<<< HEAD
+
 
         eggImageView= (ImageView) findViewById(R.id.egg);
-=======
+
         //初始化historyHelper
         mHistoryHelper=new HistoryHelper(MainActivity.this);
 
->>>>>>> 8552c26e00b8f06171e1f8b4d36d0c2ccd5663b2
+
 
     }
     private void initData() {
