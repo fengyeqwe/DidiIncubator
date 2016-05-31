@@ -44,7 +44,8 @@
                 android:id="@+id/suosou"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:text="请输入孵化器的名字"
+                android:hint="请输入孵化器的名字"
+                android:textColor="#21282D"
                 android:drawableLeft="@drawable/serach"
                 android:background="@drawable/edit_sousuo"
 

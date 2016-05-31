@@ -246,6 +246,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 Intent intent = new Intent();
                 intent.setClass(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
+                //TODO
+                finish();
             }
 
             @Override
@@ -325,6 +327,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     Intent intent = new Intent();
                     intent.setClass(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
+                    //TODO
+                    LoginActivity.this.finish();
                 } else {
                     Toast.makeText(this, "用户名或密码错误", Toast.LENGTH_LONG).show();
                 }
@@ -333,6 +337,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 Intent intent = new Intent();
                 intent.setClass(LoginActivity.this, ZhuCeActivity.class);
                 startActivity(intent);
+                //TODO
+                finish();
                 break;
             case R.id.qqdenglu:
                 login(SHARE_MEDIA.QQ);
@@ -379,7 +385,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public void testLogin(View view) {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-        finish();
+       // finish();
 
     }
 

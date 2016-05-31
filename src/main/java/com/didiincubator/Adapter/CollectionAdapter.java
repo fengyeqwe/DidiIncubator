@@ -1,14 +1,21 @@
 package com.didiincubator.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapRegionDecoder;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.didiincubator.Beans.Incubator;
+import com.didiincubator.Beans.DidiBean;
+import com.didiincubator.Presenter.Imageparser;
 import com.didiincubator.R;
+import com.didiincubator.listener.HttpListener;
+import com.yolanda.nohttp.Response;
 
 import java.util.List;
 
@@ -16,10 +23,11 @@ import java.util.List;
  * Created by 何晓 on 2016/5/30.
  */
 public class CollectionAdapter extends BaseAdapter{
-    List<Incubator> list;
+    List<DidiBean> list;
     Context context;
     LayoutInflater inflater;
-    public CollectionAdapter(List<Incubator> list,Context context){
+    Handler handler=new Handler();
+    public CollectionAdapter(List<DidiBean> list,Context context){
         this.list=list;
         this.context=context;
         inflater=LayoutInflater.from(context);
@@ -38,18 +46,7 @@ public class CollectionAdapter extends BaseAdapter{
     public long getItemId(int position) {
         return position;
     }
-    public class ViewHolder{
-        TextView sketch,details,area,num,local,type,name;
-        public ViewHolder(View view){
-            sketch= (TextView) view.findViewById(R.id.sketch);
-            details= (TextView) view.findViewById(R.id.details);
-            area= (TextView) view.findViewById(R.id.area);
-            num= (TextView) view.findViewById(R.id.num);
-            local= (TextView) view.findViewById(R.id.local);
-            type= (TextView) view.findViewById(R.id.type);
-            name= (TextView) view.findViewById(R.id.name);
-        }
-    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder=null;
@@ -60,14 +57,20 @@ public class CollectionAdapter extends BaseAdapter{
         }else {
             viewHolder= (ViewHolder) convertView.getTag();
         }
-        Incubator incubator=list.get(position);
-        viewHolder.sketch.setText(incubator.getSketch());
-        viewHolder.details.setText(incubator.getDetails());
-        viewHolder.area.setText(Double.toString(incubator.getArea()));
-        viewHolder.num.setText(Integer.toString(incubator.getNum()));
-        viewHolder.local.setText(incubator.getLocal());
-        viewHolder.type.setText(incubator.getType());
-        viewHolder.name.setText(incubator.getName());
+        DidiBean incubator=list.get(position);
+        viewHolder.name.setText("名称："+incubator.getName());
+        new Imageparser(viewHolder.collectionImage,"http://o7f489fjp.bkt.clouddn.com/a1.PNG",handler).start();
         return convertView;
     }
+    public class ViewHolder{
+        ImageView collectionImage;
+        TextView name,price,local;
+        public ViewHolder(View view){
+            collectionImage= (ImageView) view.findViewById(R.id.collection_picture);
+            name= (TextView) view.findViewById(R.id.collection_name);
+            price= (TextView) view.findViewById(R.id.collection_price);
+            local= (TextView) view.findViewById(R.id.colletion_location);
+        }
+    }
+
 }
