@@ -78,10 +78,6 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerToggle;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> fc187efa990c4452ceb077917b97b62b249b3a82
     //点击蛋显示孵化器列表
     ImageView eggImageView;
 
@@ -140,21 +136,21 @@ public class MainActivity extends AppCompatActivity {
         baiduMap.setMapStatus(factory);
         labelDescriptor= BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
         relativeLayout= (RelativeLayout) findViewById(R.id.rl_marker);
-<<<<<<< HEAD
-        eggImageView= (ImageView) findViewById(R.id.egg);
-        //初始化historyHelper
-        mHistoryHelper=new HistoryHelper(MainActivity.this);
-=======
-
 
         eggImageView= (ImageView) findViewById(R.id.egg);
-
         //初始化historyHelper
         mHistoryHelper=new HistoryHelper(MainActivity.this);
 
 
 
->>>>>>> fc187efa990c4452ceb077917b97b62b249b3a82
+        eggImageView= (ImageView) findViewById(R.id.egg);
+
+        //初始化historyHelper
+        mHistoryHelper=new HistoryHelper(MainActivity.this);
+
+
+
+
     }
     private void initData() {
             list=new ArrayList<>();

@@ -14,12 +14,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.didiincubator.Adapter.CollectionAdapter;
-<<<<<<< HEAD
-import com.didiincubator.Beans.DidiBean;
-=======
-import com.didiincubator.Beans.Incubator;
 
->>>>>>> fc187efa990c4452ceb077917b97b62b249b3a82
+import com.didiincubator.Beans.DidiBean;
+
 import com.didiincubator.R;
 import com.didiincubator.View.DetailActivity;
 import com.didiincubator.listener.CollectionListener;

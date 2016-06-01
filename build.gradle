@@ -59,10 +59,7 @@ android {
 }
 
 dependencies {
-<<<<<<< HEAD
-=======
 
->>>>>>> fc187efa990c4452ceb077917b97b62b249b3a82
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.yolanda.nohttp:nohttp:1.0.0'
     compile 'com.loopeer.android.thirdparty.pulltorefresh:Android-PullToRefresh:2.1.1'
