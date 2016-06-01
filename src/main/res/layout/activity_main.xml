@@ -15,6 +15,7 @@
             android:layout_height="match_parent"
             android:clickable="true" />
         <include layout="@layout/map_marker"/>
+
         <ImageView
             android:id="@+id/egg"
             android:layout_width="wrap_content"
@@ -22,6 +23,7 @@
             android:src="@drawable/egg2"
             android:layout_alignParentBottom="true"
             />
+
     </RelativeLayout>
 
     <LinearLayout
@@ -40,16 +42,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
-            <EditText
-                android:id="@+id/suosou"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:hint="请输入孵化器的名字"
-                android:textColor="#21282D"
-                android:drawableLeft="@drawable/serach"
-                android:background="@drawable/edit_sousuo"
-
-                />
+                android:layout_height="wrap_content"
+                android:weightSum="6"
+                >
+                <EditText
+                    android:id="@+id/suosou"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="45dp"
+                    android:hint="请输入孵化器的名字"
+                    android:textColor="#21282D"
+                    android:drawableLeft="@drawable/serach"
+                    android:background="@drawable/edit_sousuo"
+                    />
+                <Button
+                    android:id="@+id/sousuo_incubator"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="45dp"
+                    android:text="搜索"
+                    />
+            </LinearLayout>
+            <include layout="@layout/egg_listview"></include>
         </FrameLayout>
     </LinearLayout>
     <android.support.design.widget.NavigationView
