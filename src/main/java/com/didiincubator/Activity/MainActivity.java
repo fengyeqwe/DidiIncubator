@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,6 +42,7 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.bumptech.glide.Glide;
+import com.didiincubator.Adapter.AllAdapter;
 import com.didiincubator.Beans.DidiBean;
 import com.didiincubator.Beans.InMapInfo;
 import com.didiincubator.R;
@@ -48,6 +51,7 @@ import com.didiincubator.View.HistoryActivity;
 import com.didiincubator.utils.HistoryHelper;
 import com.didiincubator.utils.HistoryTable;
 import com.google.gson.JsonObject;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.OnResponseListener;
 import com.yolanda.nohttp.Request;
@@ -63,6 +67,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     public  static final int NOHTTP_MARK = 0x002;
@@ -110,14 +116,14 @@ public class MainActivity extends AppCompatActivity {
 
     //点击蛋显示孵化器列表
     ImageView eggImageView;
-
+    //TODO 点击蛋显示的布局
+    LinearLayout linearLayout;
+    PullToRefreshListView pullToRefreshListView;
+    AllAdapter adapter;
     //声明数据库操作类
     SQLiteDatabase mDataBase;
     //声明数据库辅助类对象
     HistoryHelper mHistoryHelper;
-    //TODO 主界面的listview的布局
-    LinearLayout linearLayout;
-
 
 
     @Override
@@ -149,7 +155,8 @@ public class MainActivity extends AppCompatActivity {
         //initOverlay(list);
         // 延迟2秒
         handler.sendMessageDelayed(handler.obtainMessage(1),2000);
-
+        adapter=new AllAdapter(list,context);
+        pullToRefreshListView.setAdapter(adapter);
         initNavigation();
         initMyLocation();
         initMarkerListener();//监听事件
@@ -174,10 +181,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         //初始化蛋
-
         eggImageView= (ImageView) findViewById(R.id.egg);
-
         linearLayout= (LinearLayout) findViewById(R.id.egg_linearLayout);
+        pullToRefreshListView= (PullToRefreshListView) findViewById(R.id.egg_listView);
 
         //初始化historyHelper
         mHistoryHelper=new HistoryHelper(MainActivity.this);
@@ -210,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
                     incubator = new DidiBean();
                     try {
                         JSONObject object = result.getJSONObject(i);
+                        incubator.setId(object.getInt("id"));
                         incubator.setName(object.getString("name"));
                         incubator.setType_didi(object.getString("type_didi"));
                         incubator.setSketch(object.getString("sketch"));
@@ -217,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
                         incubator.setCoordinateY((float) object.getDouble("coordinateY"));
                         incubator.setHeadPortrait(object.getString("headPortrait"));
                         list.add(incubator);
+                        adapter.notifyDataSetChanged();
                         //Toast.makeText(context, "为什么"+list.size(), Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -433,14 +441,44 @@ public class MainActivity extends AppCompatActivity {
             public void onTouch(MotionEvent motionEvent) {
                 int event = motionEvent.getAction();
                 if (event == MotionEvent.ACTION_DOWN) {
-                    relativeLayout.setVisibility(View.GONE);
-                    eggImageView.setVisibility(View.VISIBLE);
-                }else if (event==MotionEvent.BUTTON_FORWARD){
-                    linearLayout.setVisibility(View.GONE);
+                    relativeLayout.setVisibility(View.GONE);//当点击屏幕的时候布局消失
+                    eggImageView.setVisibility(View.VISIBLE);//蛋显示
                 }
             }
         });
     }
+
+    //监听返回键
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            relativeLayout.setVisibility(View.GONE);//当按下返回键的时候，布局消失
+            eggImageView.setVisibility(View.VISIBLE);//蛋显示
+            linearLayout.setVisibility(View.GONE);//显示孵化器的布局消失
+            exitBy2Click();
+            //return super.onKeyDown(keyCode, event);
+        }
+        return false;
+    }
+    public  static  Boolean isExit=false;
+    private void exitBy2Click(){
+        Timer timer=null;
+        if (isExit==false){
+            isExit=true;
+            //Toast.makeText(context, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            timer=new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isExit=false;
+                }
+            },2000);
+        }else{
+            finish();;
+            System.exit(0);
+        }
+    }
+
     //侧滑事件监听
     public void initNavigation(){
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -481,14 +519,14 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent=new Intent(MainActivity.this, DetailActivity.class);
                 startActivity(intent);
-                addhistory();//点击孵化器时，向sqlite添加历史记录
+                addhistory(incubator.getId());//点击孵化器时，向sqlite添加历史记录
             }
 
-            private void addhistory() {
+            private void addhistory(int id) {
                 //获取当前系统时间
                 Calendar c=Calendar.getInstance();
                 String time=c.get(Calendar.YEAR)+"年"+(c.get(Calendar.MONTH)+1)+"月"+c.get(Calendar.DAY_OF_MONTH)+"日";
-                Integer didi_id=1;//点击的孵化器id，未完成
+                Integer didi_id=id;//点击的孵化器id，未完成
 
                 //使用getReadableDataBase ，内存不足时，不会抛出异常
                 mDataBase=mHistoryHelper.getReadableDatabase();
@@ -502,7 +540,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-        //蛋的点击事件
+        // TODO 蛋的点击事件
     private void initEggListener() {
         eggImageView.setOnClickListener(new View.OnClickListener() {
             @Override
