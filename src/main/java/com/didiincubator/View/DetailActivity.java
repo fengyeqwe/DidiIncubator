@@ -1,8 +1,10 @@
 package com.didiincubator.View;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.internal.ForegroundLinearLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,14 +13,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.didiincubator.Presenter.DetailPresenter;
+import com.didiincubator.Beans.Detail;
+import com.didiincubator.Beans.DidiBean;
+import com.didiincubator.Beans.GongWei;
+import com.didiincubator.Beans.Pictures;
 import com.didiincubator.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMusic;
 import com.umeng.socialize.sso.QZoneSsoHandler;
+import com.yolanda.nohttp.NoHttp;
+import com.yolanda.nohttp.OnResponseListener;
+import com.yolanda.nohttp.Request;
+import com.yolanda.nohttp.RequestQueue;
+import com.yolanda.nohttp.Response;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,30 +44,25 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 
 
-public class DetailActivity extends AppCompatActivity implements IdetailVIew  {
-    ViewPager mViewPager;
+public class DetailActivity extends AppCompatActivity {
+    ViewPager mViewPager;//image滑动图
     @Bind(R.id.details_btn_back)
-    ImageView mDetailsBtnBack;
+    ImageView mDetailsBtnBack;//返回键
     @Bind(R.id.details_btn_collection)
-    ImageView mDetailsBtnCollection;
+    ImageView mDetailsBtnCollection;//收藏键
     @Bind(R.id.details_text_address)
-    TextView mDetailsTextAddress;
+    TextView mDetailsTextAddress;//地址
     @Bind(R.id.details_text_price)
-    TextView mDetailsTextPrice;
-    @Bind(R.id.tv_property_management_level)
-    TextView mTvPropertyManagementLevel;
-    @Bind(R.id.tv_investor)
-    TextView mTvInvestor;
+    TextView mDetailsTextPrice;//价格
+
+
     @Bind(R.id.tv_groundFloor)
     TextView mTvGroundFloor;
     @Bind(R.id.tv_totalCFA)
     TextView mTvTotalCFA;
     @Bind(R.id.tv_floorHeight)
     TextView mTvFloorHeight;
-    @Bind(R.id.tv_propertyManagementMoney)
-    TextView mTvPropertyManagementMoney;
-    @Bind(R.id.tv_room_rate)
-    TextView mTvRoomRate;
+
     @Bind(R.id.tv_propertyManagementer)
     TextView mTvPropertyManagementer;
     @Bind(R.id.tv_traffic_metro)
@@ -84,30 +94,47 @@ public class DetailActivity extends AppCompatActivity implements IdetailVIew  {
     @Bind(R.id.details_in)
     ImageView mDetailsIn;
     @Bind(R.id.details_text_title)
-    TextView mDetailsTextTitle;
+    TextView mDetailsTextTitle;//标题
     @Bind(R.id.detail_sketch)
     TextView mDetailSketch;
+    @Bind(R.id.tv_countSum)
+    TextView mTvCountSum;//工位面积
+    @Bind(R.id.tv_countRemainer)
+    TextView mTvCountRemainer;//剩余工位
     private LayoutInflater inflater;
     private ArrayList<View> mList;
     private PagerAdapter pagerAdapter;
     private List<Integer> imgList;
-    private DetailPresenter mPresenter;
-
+    private  Bitmap[] mBitmaps=new Bitmap[3];//加载的图片
 
     // 整个平台的Controller,负责管理整个SDK的配置、操作等处理
     UMSocialService mController = UMServiceFactory
             .getUMSocialService("com.umeng.share");
+    private DidiBean didi;
+    private RequestQueue mQueue;
+    public Gson gson = new Gson();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
-       //mPresenter = new DetailPresenter(this);
+        mQueue = NoHttp.newRequestQueue();
         initView();
         initData();
+        setViews();
         initAdapter();
-        setShareContent();
-       // mPresenter.loadUI();//网络请求获的数据空指针
+        setShareContent();//一键分享
+
+    }
+
+    private void setViews() {
+        mDetailsTextTitle.setText(didi.getName());
+        mDetailsTextAddress.setText("地址");
+        mDetailsTextPrice.setText("价格");
+        mDetailSketch.setText(didi.getSketch());
+
+
     }
 
     private void setShareContent() {
@@ -143,13 +170,15 @@ public class DetailActivity extends AppCompatActivity implements IdetailVIew  {
     }
 
 
-
-
     private void initAdapter() {
         pagerAdapter = new PagerAdapter() {
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
                 View view = mList.get(position);
+              ImageView image= (ImageView) view.findViewById(R.id.detail_viewPager1);
+                if (mBitmaps[position]!=null) {
+                    image.setImageBitmap(mBitmaps[position]);
+                }
                 container.addView(view);
                 return view;
             }
@@ -173,12 +202,160 @@ public class DetailActivity extends AppCompatActivity implements IdetailVIew  {
     }
 
     private void initData() {
+        Bundle extras = getIntent().getExtras();
+        //didi=(DidiBean)extras.getSerializable("didi");
+        didi = new DidiBean();
+        didi.setId(4);
+        didi.setDetail_id(2);
+        didi.setStation_id(3);
+        getDetail();//详情网络请求
+        getStation();//工位网络请求
+        getImages();
+
         mList = new ArrayList<View>();
         inflater = getLayoutInflater();
         mList.add(inflater.inflate(R.layout.viewpager_item1, null));
-        mList.add(inflater.inflate(R.layout.viewpager_item2, null));
-        mList.add(inflater.inflate(R.layout.viewpager_item3, null));
+        mList.add(inflater.inflate(R.layout.viewpager_item1, null));
+        mList.add(inflater.inflate(R.layout.viewpager_item1, null));
 
+
+    }
+
+    private void getImages() {
+        String url ="http://10.201.1.152:8080/Didiweb/picturesServlet";
+        Request<JSONArray> imgRequest=NoHttp.createJsonArrayRequest(url);
+        imgRequest.add("method","select");
+        imgRequest.add("id",didi.getId());
+        mQueue.add(1, imgRequest, new OnResponseListener<JSONArray>() {
+            @Override
+            public void onStart(int what) {
+
+            }
+
+            @Override
+            public void onSucceed(int what, Response<JSONArray> response) {
+                JSONArray result = response.get();
+                List<Pictures> list = gson.fromJson(result.toString(), new TypeToken<List<Pictures>>() {
+                }.getType());
+                for(int i=0;i<list.size();i++){
+                    Request<Bitmap> request=NoHttp.createImageRequest(list.get(i).getUrl());
+                    mQueue.add(i, request, new OnResponseListener<Bitmap>() {
+                        @Override
+                        public void onStart(int what) {
+
+                        }
+
+                        @Override
+                        public void onSucceed(int what, Response<Bitmap> response) {
+
+                            Bitmap image = response.get();
+                            mBitmaps[what]=image;
+                            pagerAdapter.notifyDataSetChanged();
+                            Toast.makeText(DetailActivity.this,"success",Toast.LENGTH_SHORT).show();
+
+
+                        }
+
+                        @Override
+                        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+
+                        }
+
+                        @Override
+                        public void onFinish(int what) {
+
+                        }
+                    });
+
+                }
+
+            }
+
+            @Override
+            public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+
+            }
+
+            @Override
+            public void onFinish(int what) {
+
+            }
+        });
+    }
+
+    private void getStation() {
+        String url = "http://10.201.1.152:8080/Didiweb/gongweiServlet";
+        Request<JSONArray> stationRequest = NoHttp.createJsonArrayRequest(url);
+        stationRequest.add("method", "select");
+        stationRequest.add("id", didi.getStation_id());
+        mQueue.add(1, stationRequest, new OnResponseListener<JSONArray>() {
+            @Override
+            public void onStart(int what) {
+
+            }
+
+            @Override
+            public void onSucceed(int what, Response<JSONArray> response) {
+                JSONArray result = response.get();
+                List<GongWei> list = gson.fromJson(result.toString(), new TypeToken<List<GongWei>>() {
+                }.getType());
+                GongWei gongWei = list.get(0);
+                mTvCountSum.setText(gongWei.getAreaAvg());
+                mTvCountRemainer.setText(gongWei.getCountRemainer()+" ");
+                mDetailsTextPrice.setText(gongWei.getPrice() + "元/平方米.月");
+
+            }
+
+            @Override
+            public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+
+            }
+
+            @Override
+            public void onFinish(int what) {
+
+            }
+        });
+
+    }
+
+    private void getDetail() {
+        String url = "http://10.201.1.152:8080/Didiweb/detailServlet";
+        Request<JSONArray> detailrequest = NoHttp.createJsonArrayRequest(url);
+        detailrequest.add("method", "select");
+        detailrequest.add("id", didi.getDetail_id());
+        mQueue.add(1, detailrequest, new OnResponseListener<JSONArray>() {
+
+
+            @Override
+            public void onStart(int what) {
+
+            }
+
+            @Override
+            public void onSucceed(int what, Response<JSONArray> response) {
+                JSONArray result = response.get();
+                List<Detail> list = gson.fromJson(result.toString(), new TypeToken<List<Detail>>() {
+                }.getType());
+                Detail detail = list.get(0);
+                mTvGroundFloor.setText(detail.getFloor() + " ");
+                mTvFloorHeight.setText(detail.getHigh() + " ");
+                mTvTotalCFA.setText(detail.getArea());
+                mTvPropertyManagementer.setText(detail.getProperty());
+
+
+            }
+
+            @Override
+            public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+
+            }
+
+            @Override
+            public void onFinish(int what) {
+
+            }
+        });
 
     }
 
@@ -215,7 +392,7 @@ public class DetailActivity extends AppCompatActivity implements IdetailVIew  {
                 phone(2);
                 break;
             case R.id.details_message:
-                RongIM.getInstance().startPrivateChat(DetailActivity.this,"362970502","chat");
+                RongIM.getInstance().startPrivateChat(DetailActivity.this, "362970502", "chat");
                 break;
             case R.id.details_share://第三方分享
                 share();
@@ -236,40 +413,10 @@ public class DetailActivity extends AppCompatActivity implements IdetailVIew  {
     }
 
 
-    @Override
-    public void setName(String name) {
-        mDetailsTextTitle.setText(name);
-
-    }
-
-    @Override
-    public void setSketch(String sketch) {
-        mDetailSketch.setText(sketch);
-
-    }
-
-    @Override
-    public void setDetail_id(int detail_id) {
-        //详情id
-    }
-
-    @Override
-    public void setStation_id(int station_id) {
-        //工位情况
-
-    }
-
-    @Override
-    public void setCoordinate(String coordinate) {
-        //坐标
-
-    }
-
-    @Override
     public void phone(int phoneNumber) {
         Intent intent = new Intent();
         intent.setAction("android.intent.action.CALL");
-        intent.setData(Uri.parse("tel:"+"18238777036"));
+        intent.setData(Uri.parse("tel:" + "18238777036"));
         startActivity(intent);
 
     }

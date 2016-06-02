@@ -15,15 +15,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.didiincubator.Beans.DidiBean;
+import com.didiincubator.Beans.Pictures;
 import com.didiincubator.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.OnResponseListener;
 import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.RequestQueue;
 import com.yolanda.nohttp.Response;
+import com.yolanda.nohttp.db.Where;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Created by fengye on 2016/5/30.
@@ -37,6 +44,8 @@ public class HistoryAdapter implements ExpandableListAdapter {
     private List<ArrayList<DidiBean>> didis;
     private TextView mTextView;
     private RequestQueue mQueue;
+    private Gson gson;
+    private String picUrl="http://o7f489fjp.bkt.clouddn.com/a3.PNG";
 
     /**
      *
@@ -144,8 +153,35 @@ public class HistoryAdapter implements ExpandableListAdapter {
     }
 
     private void setImage(final ViewHolder viewHolder, DidiBean didi) {
-        String url="http://o7f489fjp.bkt.clouddn.com/a1.PNG";
-        Request<Bitmap> request= NoHttp.createImageRequest(url);
+        Request<JSONArray> stRequest=NoHttp.createJsonArrayRequest("http://10.201.1.152:8080/Didiweb/picturesServlet");
+        stRequest.add("method","select");
+        stRequest.add("didi_id",didi.getId());
+        mQueue.add(1, stRequest, new OnResponseListener<JSONArray>() {
+            @Override
+            public void onStart(int what) {
+
+            }
+
+            @Override
+            public void onSucceed(int what, Response<JSONArray> response) {
+                JSONArray result = response.get();
+               ArrayList<Pictures> pictures= gson.fromJson(result.toString(),new TypeToken<List<DidiBean>>(){}.getType());
+                picUrl=pictures.get(1).getUrl();
+
+
+            }
+
+            @Override
+            public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+
+            }
+
+            @Override
+            public void onFinish(int what) {
+
+            }
+        });
+        Request<Bitmap> request= NoHttp.createImageRequest(picUrl);
         mQueue.add(1, request, new OnResponseListener<Bitmap>() {
             @Override
             public void onStart(int what) {
@@ -168,6 +204,8 @@ public class HistoryAdapter implements ExpandableListAdapter {
 
             }
         });
+
+
 
     }
 
