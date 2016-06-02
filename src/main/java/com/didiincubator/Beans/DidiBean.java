@@ -12,12 +12,19 @@ public class DidiBean implements Serializable {
     private String name;//名称
     private String sketch;//简述
     private int detail_id;//详细介绍id
+
+
     private int station_id;//工位情况id
+    private String type_didi;//孵化器项目类型
+    private String phoneNumber;//电话
+    private int Station_id;//工位情况id
     private float coordinateX;
     private float coordinateY;//位置坐标
-    private String type_didi;//孵化器项目类型
-    private String phoneNumber;//联系电话
+    private String phonenumber;//联系电话
     private String headPortrait;//头像
+
+    public DidiBean() {
+    }
 
     public int getId() {
         return id;
@@ -75,6 +82,22 @@ public class DidiBean implements Serializable {
         this.coordinateY = coordinateY;
     }
 
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public String getHeadPortrait() {
+        return headPortrait;
+    }
+
+    public void setHeadPortrait(String headPortrait) {
+        this.headPortrait = headPortrait;
+    }
+
     public String getType_didi() {
         return type_didi;
     }
@@ -90,30 +113,5 @@ public class DidiBean implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
-    public String getHeadPortrait() {
-        return headPortrait;
-    }
-
-    public void setHeadPortrait(String headPortrait) {
-        this.headPortrait = headPortrait;
-    }
-
-    public DidiBean() {
-    }
-
-    public DidiBean(int id, String name, String sketch, int detail_id, int station_id, float coordinateX, float coordinateY, String type_didi, String phoneNumber, String headPortrait) {
-        this.id = id;
-        this.name = name;
-        this.sketch = sketch;
-        this.detail_id = detail_id;
-        this.station_id = station_id;
-        this.coordinateX = coordinateX;
-        this.coordinateY = coordinateY;
-        this.type_didi = type_didi;
-        this.phoneNumber = phoneNumber;
-        this.headPortrait = headPortrait;
-    }
-
 }
 

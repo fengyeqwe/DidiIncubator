@@ -1,8 +1,6 @@
 package com.didiincubator.Adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapRegionDecoder;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.didiincubator.Beans.DidiBean;
-import com.didiincubator.Presenter.Imageparser;
 import com.didiincubator.R;
-import com.didiincubator.listener.HttpListener;
-import com.yolanda.nohttp.Response;
 
 import java.util.List;
 
@@ -26,7 +22,6 @@ public class CollectionAdapter extends BaseAdapter{
     List<DidiBean> list;
     Context context;
     LayoutInflater inflater;
-    Handler handler=new Handler();
     public CollectionAdapter(List<DidiBean> list,Context context){
         this.list=list;
         this.context=context;
@@ -57,11 +52,16 @@ public class CollectionAdapter extends BaseAdapter{
         }else {
             viewHolder= (ViewHolder) convertView.getTag();
         }
+
         DidiBean incubator=list.get(position);
+       // getImage(viewHolder,incubator);
         viewHolder.name.setText("名称："+incubator.getName());
-        new Imageparser(viewHolder.collectionImage,"http://o7f489fjp.bkt.clouddn.com/a1.PNG",handler).start();
+        Glide.with(context).load(incubator.getHeadPortrait()).centerCrop().crossFade()
+                .into(viewHolder.collectionImage);
+        // new Imageparser(viewHolder.collectionImage,"http://o7f489fjp.bkt.clouddn.com/a1.PNG",handler).start();
         return convertView;
     }
+
     public class ViewHolder{
         ImageView collectionImage;
         TextView name,price,local;

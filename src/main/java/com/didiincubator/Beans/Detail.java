@@ -3,14 +3,14 @@ package com.didiincubator.Beans;
 import java.io.Serializable;
 
 /**
- * Created by 枫叶1 on 2016/6/1.
+ * Created by fengye1 on 2016/6/1.
  */
 public class Detail implements Serializable {
     private int id;
-    private int floor;//层数
-    private String area;//面积
-    private String high;//层高
-    private String property;//物业
+    private int floor;//灞傛暟
+    private String area;//闈㈢Н
+    private String high;//灞傞珮
+    private String property;//鐗╀笟
 
     public int getId() {
         return id;

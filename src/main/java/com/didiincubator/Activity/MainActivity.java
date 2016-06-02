@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,18 +39,33 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.bumptech.glide.Glide;
+import com.didiincubator.Beans.DidiBean;
 import com.didiincubator.Beans.InMapInfo;
 import com.didiincubator.R;
 import com.didiincubator.View.DetailActivity;
 import com.didiincubator.View.HistoryActivity;
 import com.didiincubator.utils.HistoryHelper;
 import com.didiincubator.utils.HistoryTable;
+import com.google.gson.JsonObject;
+import com.yolanda.nohttp.NoHttp;
+import com.yolanda.nohttp.OnResponseListener;
+import com.yolanda.nohttp.Request;
+import com.yolanda.nohttp.RequestMethod;
+import com.yolanda.nohttp.RequestQueue;
+import com.yolanda.nohttp.Response;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public  static final int NOHTTP_MARK = 0x002;
     Context context;
     MapView mapView;
     BaiduMap baiduMap;
@@ -68,9 +86,21 @@ public class MainActivity extends AppCompatActivity {
     //标注物
     BitmapDescriptor labelDescriptor=null;//标注物图标
     Marker marker;
-    List<InMapInfo> list;
+    List<DidiBean> list;
+    DidiBean incubator;
     ImageView imageView;
     TextView tv_name,tv_type,tv_sketch,tv_number,tv_distance;
+    //标志物解析数据
+    RequestQueue queue=NoHttp.newRequestQueue();;
+    //static  final int NOHTTP_MARKER=0x001;
+
+    private Handler handler=new Handler(){
+        public void dispatchMessage(Message message){
+            if (1==message.what){
+                initOverlay(list);
+            }
+        }
+    };
 
     //左侧滑控件
     DrawerLayout drawerLayout;
@@ -85,6 +115,9 @@ public class MainActivity extends AppCompatActivity {
     SQLiteDatabase mDataBase;
     //声明数据库辅助类对象
     HistoryHelper mHistoryHelper;
+    //TODO 主界面的listview的布局
+    LinearLayout linearLayout;
+
 
 
     @Override
@@ -96,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
        //SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_main);
+        list=new ArrayList<>();//（孵化器）标志物集合
+        initMarkerData();//初始化
         this.context=this;
         mapView= (MapView) findViewById(R.id.didi_mapView);
         initView();//初始化视图
@@ -111,10 +146,12 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();//初始化状态
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
+        //initOverlay(list);
+        // 延迟2秒
+        handler.sendMessageDelayed(handler.obtainMessage(1),2000);
+
         initNavigation();
         initMyLocation();
-        initData();//初始化
-        initOverlay(list);
         initMarkerListener();//监听事件
         initEggListener();//监听主界面蛋的点击事件，显示附近孵化器列表
 
@@ -128,8 +165,6 @@ public class MainActivity extends AppCompatActivity {
         tv_name= (TextView) findViewById(R.id.tv_name);
         tv_type= (TextView) findViewById(R.id.tv_type);
         tv_sketch= (TextView) findViewById(R.id.tv_sketch);
-        tv_number= (TextView) findViewById(R.id.tv_number);
-        tv_distance= (TextView) findViewById(R.id.tv_distance);
         baiduMap=mapView.getMap();
         //改变标尺大小
         MapStatusUpdate factory= MapStatusUpdateFactory.zoomTo(15.0f);//500米
@@ -137,13 +172,12 @@ public class MainActivity extends AppCompatActivity {
         labelDescriptor= BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
         relativeLayout= (RelativeLayout) findViewById(R.id.rl_marker);
 
-        eggImageView= (ImageView) findViewById(R.id.egg);
-        //初始化historyHelper
-        mHistoryHelper=new HistoryHelper(MainActivity.this);
 
-
+        //初始化蛋
 
         eggImageView= (ImageView) findViewById(R.id.egg);
+
+        linearLayout= (LinearLayout) findViewById(R.id.egg_linearLayout);
 
         //初始化historyHelper
         mHistoryHelper=new HistoryHelper(MainActivity.this);
@@ -152,23 +186,66 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    private void initData() {
-            list=new ArrayList<>();
-        list.add(new InMapInfo(31.265884,120.751372, R.drawable.intor1,"bootcamp创业孵化器",
-                "科技","xxxxxxxxxxx",100,
-                "1.7公里"));
-        list.add(new InMapInfo(31.271005,120.63504,R.drawable.intor2,"苏州吴中国家级科技企业孵化器","科技",
-                "xxxxxxxxxxxxxx",200,"10公里"));
-        list.add(new InMapInfo(31.280021,120.75086,R.drawable.intor3,"苏州高博","软件",
-                "xxxxxxxxxxxxxx",200,"100米"));
+
+    //解析标注物
+    private void initMarkerData() {
+        String method = "selectall";
+        String name = "";
+        String url = "http://10.201.1.152:8080/Didiweb/DidiServlet";
+        final Request<JSONArray> request = NoHttp.createJsonArrayRequest(url, RequestMethod.GET);
+        request.add("method", method);
+        request.add("name", name);
+        queue.add(NOHTTP_MARK, request, new OnResponseListener<JSONArray>() {
+            @Override
+            public void onStart(int what) {
+
+            }
+
+            @Override
+            public void onSucceed(int what, Response<JSONArray> response) {
+                //Toast.makeText(context, "为什么", Toast.LENGTH_SHORT).show();
+                JSONArray result = response.get();
+                //Toast.makeText(context, "re"+result.toString(), Toast.LENGTH_SHORT).show();
+                for (int i = 0; i < result.length(); i++) {
+                    incubator = new DidiBean();
+                    try {
+                        JSONObject object = result.getJSONObject(i);
+                        incubator.setName(object.getString("name"));
+                        incubator.setType_didi(object.getString("type_didi"));
+                        incubator.setSketch(object.getString("sketch"));
+                        incubator.setCoordinateX((float) object.getDouble("coordinateX"));
+                        incubator.setCoordinateY((float) object.getDouble("coordinateY"));
+                        incubator.setHeadPortrait(object.getString("headPortrait"));
+                        list.add(incubator);
+                        //Toast.makeText(context, "为什么"+list.size(), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+
+
+            }
+
+
+            @Override
+            public void onFinish(int what) {
+
+            }
+
+        });
     }
-    private void initOverlay(List<InMapInfo> list) {
+    private void initOverlay(List<DidiBean> list) {
 
         //TODO 从数据库获取数据解析
-        baiduMap.clear();
+        //baiduMap.clear();
         LatLng latLng=null;
-        for (InMapInfo info:list) {
-            latLng=new LatLng(info.getLatitude(),info.getLongtitude());//位置
+        //Toast.makeText(MainActivity.this,"xx:"+list.toString(),Toast.LENGTH_LONG).show();
+        for (DidiBean info:list) {
+            latLng=new LatLng(info.getCoordinateY(),info.getCoordinateX());//位置
             //图标
             OverlayOptions overlayOptions=new MarkerOptions().position(latLng).icon(labelDescriptor).zIndex(5);
             marker= (Marker) baiduMap.addOverlay(overlayOptions);
@@ -176,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
             bundle.putSerializable("info",info);
             marker.setExtraInfo(bundle);
         }
-        //把地图移动最后一个位置，方便显示所有位置
+        //TODO 把地图移动最后一个位置，方便显示所有位置
         MapStatusUpdate msc=MapStatusUpdateFactory.newLatLng(latLng);
         baiduMap.setMapStatus(msc);
     }
@@ -323,13 +400,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Bundle bundle = marker.getExtraInfo();
-                InMapInfo info = (InMapInfo) bundle.getSerializable("info");
-                imageView.setImageResource(info.getImageId());
-                tv_name.setText(info.getName());
-                tv_type.setText(info.getType());
-                tv_sketch.setText(info.getSketch());
-                tv_number.setText(info.getNumber()+"");
-                tv_distance.setText(info.getDistance());
+                DidiBean info = (DidiBean) bundle.getSerializable("info");
+                Glide.with(MainActivity.this).load(info.getHeadPortrait()).centerCrop().crossFade()
+                        .into(imageView);
+                // imageView.setImageResource(info.getImageId());
+                tv_name.setText("孵化器名称："+info.getName());
+                tv_type.setText("孵化器类型："+info.getType_didi());
+                tv_sketch.setText("简介："+info.getSketch());
                 relativeLayout.setVisibility(View.VISIBLE);
                 eggImageView.setVisibility(View.GONE);
                 //定义标注物提示窗口
@@ -358,6 +435,8 @@ public class MainActivity extends AppCompatActivity {
                 if (event == MotionEvent.ACTION_DOWN) {
                     relativeLayout.setVisibility(View.GONE);
                     eggImageView.setVisibility(View.VISIBLE);
+                }else if (event==MotionEvent.BUTTON_FORWARD){
+                    linearLayout.setVisibility(View.GONE);
                 }
             }
         });
@@ -430,6 +509,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(v.isClickable()){
                     Toast.makeText(MainActivity.this, "点击了我", Toast.LENGTH_SHORT).show();
+                    linearLayout.setVisibility(View.VISIBLE);
                 }
             }
         });

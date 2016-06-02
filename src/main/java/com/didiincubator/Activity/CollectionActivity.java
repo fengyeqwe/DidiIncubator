@@ -1,24 +1,19 @@
 package com.didiincubator.Activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.didiincubator.Adapter.CollectionAdapter;
-
 import com.didiincubator.Beans.DidiBean;
-
 import com.didiincubator.R;
-import com.didiincubator.View.DetailActivity;
 import com.didiincubator.listener.CollectionListener;
 import com.didiincubator.utils.DidiApplication;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
@@ -43,13 +38,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 public class CollectionActivity extends AppCompatActivity {
-      static final int NOHTTP_WHAT_TEST = 0x001;
+     public  static final int NOHTTP_WHAT_TEST = 0x001;
     ImageView imageCollection;
     PullToRefreshListView listView;
     List<DidiBean> list;
     CollectionAdapter adapter;
     DidiBean incubator;
-    DidiApplication  myApplication;
     CollectionListener collectionListener;
     RequestQueue queue;
     @Override
@@ -80,7 +74,7 @@ public class CollectionActivity extends AppCompatActivity {
     private void doGet() {
         String method="selectall";
         String name="";
-        String url="http://115.28.78.82:8080/Didiweb/DidiServlet";
+        String url="http://10.201.1.152:8080/Didiweb/DidiServlet";
         final Request<JSONArray> request= NoHttp.createJsonArrayRequest(url, RequestMethod.GET);
         request.add("method",method);
         request.add("name",name);
@@ -99,6 +93,7 @@ public class CollectionActivity extends AppCompatActivity {
                         try {
                             JSONObject object = result.getJSONObject(i);
                             incubator.setName(object.getString("name"));
+                            incubator.setHeadPortrait(object.getString("headPortrait"));
                             //Toast.makeText(CollectionActivity.this, incubator.toString(), Toast.LENGTH_LONG).show();
                             list.add(incubator);
                             adapter.notifyDataSetChanged();
@@ -143,7 +138,41 @@ public class CollectionActivity extends AppCompatActivity {
             }
         });
     }
+    /*//解析图片
+    public void getImages(){
+        String method="selectall";
+        String id="";
+        String url="http://115.28.78.82:8080/Didiweb/DidiServlet";
+        final Request<JSONArray> request= NoHttp.createJsonArrayRequest(url, RequestMethod.GET);
+        request.add("method",method);
+        request.add("id",id);
+        queue.add(NOHTTP_WHAT_PICTURES, request, new OnResponseListener<JSONArray>() {
+            @Override
+            public void onStart(int what) {
 
+            }
+
+            @Override
+            public void onSucceed(int what, Response<JSONArray> response) {
+
+            }
+
+            @Override
+            public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+
+            }
+
+            @Override
+            public void onFinish(int what) {
+
+            }
+        });
+
+    }
+*/
+
+
+//返回
     private void initListener() {
         imageCollection.setOnClickListener(new View.OnClickListener() {
             @Override
