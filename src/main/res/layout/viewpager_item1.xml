@@ -7,7 +7,6 @@
         android:id="@+id/detail_viewPager1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/d3"/>
+        android:scaleType="fitXY"/>
 
 </LinearLayout>

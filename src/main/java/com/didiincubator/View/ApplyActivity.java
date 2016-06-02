@@ -9,14 +9,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
+import com.didiincubator.Beans.DidiBean;
+import com.didiincubator.Presenter.ApplyPresenter;
 import com.didiincubator.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ApplyActivity extends AppCompatActivity implements IApplyView{
+public class ApplyActivity extends AppCompatActivity implements IApplyView {
 
     @Bind(R.id.details_btn_back)
     ImageView mDetailsBtnBack;
@@ -34,12 +35,22 @@ public class ApplyActivity extends AppCompatActivity implements IApplyView{
     EditText mApplyExtra;
     @Bind(R.id.apply_submit)
     Button mApplySubmit;
+    @Bind(R.id.apply_looktime)
+    EditText mApplyLooktime;
+    private DidiBean didi;
+    private ApplyPresenter applyPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply);
         ButterKnife.bind(this);
+        initData();
+    }
+
+    private void initData() {
+        applyPresenter=new ApplyPresenter(ApplyActivity.this);
+        didi = (DidiBean) getIntent().getSerializableExtra("didi");
     }
 
     @OnClick({R.id.details_btn_back, R.id.apply_submit})
@@ -51,13 +62,17 @@ public class ApplyActivity extends AppCompatActivity implements IApplyView{
             case R.id.apply_submit:
                 submitApply();
                 //跳转申请页
-                Intent intent=new Intent(ApplyActivity.this,MyApplyActivity.class);
+                Intent intent = new Intent(ApplyActivity.this, MyApplyActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("didi", didi);
+                intent.putExtras(mBundle);
                 startActivity(intent);
                 break;
         }
     }
 
     private void submitApply() {
+        applyPresenter.submit();
 
     }
 
@@ -67,8 +82,28 @@ public class ApplyActivity extends AppCompatActivity implements IApplyView{
     }
 
     @Override
+    public int getUser_id() {
+        return 1;
+    }
+
+    @Override
+    public int getDidi_id() {
+        return didi.getId();
+    }
+
+    @Override
     public int getPhone() {
         return Integer.parseInt(mApplyPhone.getText().toString());
+    }
+
+    @Override
+    public String getLookhousetime() {
+        return mApplyLooktime.getText().toString();
+    }
+
+    @Override
+    public String getExtra() {
+        return mApplyExtra.getText().toString();
     }
 
     @Override
@@ -81,8 +116,5 @@ public class ApplyActivity extends AppCompatActivity implements IApplyView{
         return Integer.parseInt(mApplyTime.getText().toString());
     }
 
-    @Override
-    public String extra() {
-        return mApplyExtra.getText().toString();
-    }
+
 }

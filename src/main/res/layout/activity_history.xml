@@ -7,7 +7,8 @@
     tools:context=".View.HistoryActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="#8FD3FD"
         >
         <ImageView
@@ -28,9 +29,10 @@
             />
     </LinearLayout>
 
-   <ExpandableListView
+   <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
        android:id="@+id/history_list"
        android:layout_width="match_parent"
-       android:layout_height="wrap_content">
-   </ExpandableListView>
+       android:layout_height="0dp"
+       android:layout_weight="9">
+   </com.handmark.pulltorefresh.library.PullToRefreshExpandableListView>
 </LinearLayout>

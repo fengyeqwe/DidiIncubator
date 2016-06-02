@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/egg_linearLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ptr="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/egg_linearLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
     android:visibility="gone"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="孵化器"
-        android:gravity="center"
-        android:textSize="18sp"
+        android:layout_height="50dp"
         android:background="#808080"
-        android:textColor="#FDFDFD"
+        android:text="孵化器"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:gravity="center"
         />
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/egg_listView"
@@ -25,4 +24,5 @@
         ptr:ptrAnimationStyle="flip"
         >
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
+
 </LinearLayout>

@@ -6,41 +6,33 @@ import java.io.Serializable;
  * Created by 枫叶1 on 2016/5/24.
  * 孵化器信息表对象
  */
-public class DidiBean implements Serializable{
+public class DidiBean implements Serializable {
     private static final long serialVersionUID = 5192843888413143548L;
     private int id;
     private String name;//名称
     private String sketch;//简述
     private int detail_id;//详细介绍id
-
     private int station_id;//工位情况id
-    private String type_didi;//孵化器项目类型
-    private String phoneNumber;//电话
-    private int Station_id;//工位情况id
     private float coordinateX;
     private float coordinateY;//位置坐标
+    private String type_didi;//孵化器项目类型
     private String phonenumber;//联系电话
-
     private String headPortrait;//头像
+    private String address;//具体地址
 
-    public int getStation_id() {
-        return station_id;
-    }
-
-    public void setStation_id(int station_id) {
-        this.station_id = station_id;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public DidiBean() {
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public void setId(int id) {
@@ -54,6 +46,7 @@ public class DidiBean implements Serializable{
     public void setName(String name) {
         this.name = name;
     }
+
     public String getSketch() {
         return sketch;
     }
@@ -70,20 +63,12 @@ public class DidiBean implements Serializable{
         this.detail_id = detail_id;
     }
 
-    public String getType_didi() {
-        return type_didi;
+    public int getStation_id() {
+        return station_id;
     }
 
-    public void setType_didi(String type_didi) {
-        this.type_didi = type_didi;
-    }
-
-    public String getHeadPortrait() {
-        return headPortrait;
-    }
-
-    public void setHeadPortrait(String headPortrait) {
-        this.headPortrait = headPortrait;
+    public void setStation_id(int station_id) {
+        this.station_id = station_id;
     }
 
     public float getCoordinateX() {
@@ -110,9 +95,22 @@ public class DidiBean implements Serializable{
         this.phonenumber = phonenumber;
     }
 
-    public DidiBean() {
-
+    public String getHeadPortrait() {
+        return headPortrait;
     }
+
+    public void setHeadPortrait(String headPortrait) {
+        this.headPortrait = headPortrait;
+    }
+
+    public String getType_didi() {
+        return type_didi;
+    }
+
+    public void setType_didi(String type_didi) {
+        this.type_didi = type_didi;
+    }
+
 
     @Override
     public String toString() {
@@ -123,12 +121,13 @@ public class DidiBean implements Serializable{
                 ", detail_id=" + detail_id +
                 ", station_id=" + station_id +
                 ", type_didi='" + type_didi + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", Station_id=" + Station_id +
+
                 ", coordinateX=" + coordinateX +
                 ", coordinateY=" + coordinateY +
                 ", phonenumber='" + phonenumber + '\'' +
                 ", headPortrait='" + headPortrait + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }
+
