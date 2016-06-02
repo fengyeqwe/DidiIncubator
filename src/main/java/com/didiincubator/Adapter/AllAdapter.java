@@ -60,9 +60,9 @@ public class AllAdapter extends BaseAdapter{
     public class ViewHolder{
         TextView textView1,textView2,textView3;
         public ViewHolder(View view){
-            textView1= (TextView) view.findViewById(R.id.tv_1);
+           // textView1= (TextView) view.findViewById(R.id.tv_1);
             textView2= (TextView) view.findViewById(R.id.tv_2);
-            textView3= (TextView) view.findViewById(R.id.tv_3);
+           //textView3= (TextView) view.findViewById(R.id.tv_3);
 
         }
 
