@@ -412,6 +412,7 @@ public class MainActivity extends AppCompatActivity {
                 Glide.with(MainActivity.this).load(info.getHeadPortrait()).centerCrop().crossFade()
                         .into(imageView);
                 // imageView.setImageResource(info.getImageId());
+
                 tv_name.setText("孵化器名称："+info.getName());
                 tv_type.setText("孵化器类型："+info.getType_didi());
                 tv_sketch.setText("简介："+info.getSketch());

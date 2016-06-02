@@ -20,7 +20,7 @@
             android:textSize="15sp"
             />
         <TextView
-            android:id="@+id/tv_2"
+            android:id="@+id/all_dayPrice"
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content"
@@ -68,7 +68,13 @@
                 android:text="3-5个工位"
                 />
         </LinearLayout>
-
+    <CheckBox
+        android:id="@+id/all_collection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        style="@style/CollectionCheckBox"
+        />
     </LinearLayout>
 
 </LinearLayout>

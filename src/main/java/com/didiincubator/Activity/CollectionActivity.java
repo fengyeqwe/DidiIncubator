@@ -12,10 +12,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.didiincubator.Adapter.CollectionAdapter;
+import com.didiincubator.Beans.Collection;
 import com.didiincubator.Beans.DidiBean;
 import com.didiincubator.R;
 import com.didiincubator.listener.CollectionListener;
 import com.didiincubator.utils.DidiApplication;
+import com.didiincubator.utils.ExceptionUtils;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -39,19 +41,23 @@ import java.util.ArrayList;
 import java.util.List;
 public class CollectionActivity extends AppCompatActivity {
      public  static final int NOHTTP_WHAT_TEST = 0x001;
+     public static final int NOHTTP_INCUBATORID=0x005;
     ImageView imageCollection;
     PullToRefreshListView listView;
     List<DidiBean> list;
-    CollectionAdapter adapter;
-    DidiBean incubator;
-    CollectionListener collectionListener;
+    List<Integer>  incubatorID=new ArrayList<>();
+    CollectionAdapter adapter;//适配器
+    DidiBean incubator;//孵化器
+    Collection collection;//收藏表
+    CollectionListener collectionListener;//listview的监听
     RequestQueue queue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
         initView();
-        doGet();//获取网络数据，并进行解析
+        getIncubatorID();
+        doGet(incubatorID);//获取网络数据，并进行解析
         initListener();//返回监听
         adapter = new CollectionAdapter(list,this);
         listView.setAdapter(adapter);
@@ -70,106 +76,102 @@ public class CollectionActivity extends AppCompatActivity {
         collectionListener.ListenerLong();
         collectionListener.ListenerShort();
     }
+    //从收藏表的到孵化器id
+    private void getIncubatorID(){
 
-    private void doGet() {
         String method="selectall";
-        String name="";
-        String url="http://10.201.1.152:8080/Didiweb/DidiServlet";
-        final Request<JSONArray> request= NoHttp.createJsonArrayRequest(url, RequestMethod.GET);
+       // String name="";
+        String url="http://10.201.1.152:8080/Didiweb/collectionServlet";
+        final Request<JSONArray> request=NoHttp.createJsonArrayRequest(url,RequestMethod.GET);
         request.add("method",method);
-        request.add("name",name);
-        queue.add(NOHTTP_WHAT_TEST, request, new OnResponseListener<JSONArray>() {
+        queue.add(NOHTTP_INCUBATORID, request, new OnResponseListener<JSONArray>() {
             @Override
             public void onStart(int what) {
 
             }
+
             @Override
             public void onSucceed(int what, Response<JSONArray> response) {
-                if (what == NOHTTP_WHAT_TEST) {
-                    JSONArray result = response.get();
-                    //Toast.makeText(CollectionActivity.this,result.toString(),Toast.LENGTH_LONG).show();
-                    for (int i = 0; i < result.length();i++) {
-                        incubator = new DidiBean();
-                        try {
-                            JSONObject object = result.getJSONObject(i);
-                            incubator.setName(object.getString("name"));
-                            incubator.setHeadPortrait(object.getString("headPortrait"));
-                            //Toast.makeText(CollectionActivity.this, incubator.toString(), Toast.LENGTH_LONG).show();
-                            list.add(incubator);
-                            adapter.notifyDataSetChanged();
-                            //Toast.makeText(myApplication,list.size()+"..", Toast.LENGTH_SHORT).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                JSONArray result=response.get();
+                for (int i=0;i<result.length();i++){
+                    collection=new Collection();
+                    try {
+                        JSONObject object=result.getJSONObject(i);
+                        collection.setDidi_id(object.getInt("didi_id"));
+                        int id=collection.getDidi_id();
+                        incubatorID.add(id);
+                        //Toast.makeText(CollectionActivity.this, "didi_id:"+incubatorID.toString(), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
             }
 
             @Override
             public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
-                    if (exception instanceof ClientError){//客户端错误
-                        if (responseCode==400){//服务器未能理解请求
-                            Toast.makeText(CollectionActivity.this, "错误的请求，服务器表示不能理解", Toast.LENGTH_SHORT).show();
-                        }else if (responseCode==404){
-                            Toast.makeText(CollectionActivity.this, "错误的请求，服务器表示找不到", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFinish(int what) {
+
+            }
+        });
+     }
+    //解析得到收藏的孵化器的信息
+    private void doGet(List<Integer> lists) {
+       // Toast.makeText(this, "lists"+lists, Toast.LENGTH_SHORT).show();
+        int ids=0;
+        for (int i=0;i<lists.size();i++) {
+            //ids = lists.get(i);
+            // }
+            String method = "select";
+            int id = lists.get(i);
+            String url = "http://10.201.1.152:8080/Didiweb/DidiServlet";
+            final Request<JSONArray> request = NoHttp.createJsonArrayRequest(url, RequestMethod.GET);
+            request.add("method", method);
+            request.add("id", id);
+            queue.add(NOHTTP_WHAT_TEST, request, new OnResponseListener<JSONArray>() {
+                @Override
+                public void onStart(int what) {
+
+                }
+
+                @Override
+                public void onSucceed(int what, Response<JSONArray> response) {
+                    if (what == NOHTTP_WHAT_TEST) {
+                        JSONArray result = response.get();
+                        //Toast.makeText(CollectionActivity.this,result.toString(),Toast.LENGTH_LONG).show();
+                        for (int i = 0; i < result.length(); i++) {
+                            incubator = new DidiBean();
+                            try {
+                                JSONObject object = result.getJSONObject(i);
+                                incubator.setName(object.getString("name"));
+                                incubator.setHeadPortrait(object.getString("headPortrait"));
+                                //Toast.makeText(CollectionActivity.this, incubator.toString(), Toast.LENGTH_LONG).show();
+                                list.add(incubator);
+                                adapter.notifyDataSetChanged();
+                                //Toast.makeText(myApplication,list.size()+"..", Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }else if (exception instanceof ServerError){//服务器错误
-                        if (responseCode==500){
-                            Toast.makeText(CollectionActivity.this, "服务器遇到不可预知的情况", Toast.LENGTH_SHORT).show();
-                        }else if (responseCode==504){
-                            Toast.makeText(CollectionActivity.this, "网关超时", Toast.LENGTH_SHORT).show();
-                       }else{
-                            Toast.makeText(CollectionActivity.this, "服务器遇到不可预知的状况", Toast.LENGTH_SHORT).show();
-                        }
-                    }else if (exception instanceof NetworkError){//网络不好
-                        Toast.makeText(CollectionActivity.this, "请检查网络", Toast.LENGTH_SHORT).show();
-                    }else if (exception instanceof TimeoutError){//请求超时
-                        Toast.makeText(CollectionActivity.this, "请求超时，网络不好或者服务器不稳定", Toast.LENGTH_SHORT).show();
-                    }else if (exception instanceof UnKnownHostError){//找不到服务器
-                        Toast.makeText(CollectionActivity.this, "未发现服务器", Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(CollectionActivity.this, "未知错误", Toast.LENGTH_SHORT).show();
                     }
-            }
+                }
 
-            @Override
-            public void onFinish(int what) {
+                @Override
+                public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+                    ExceptionUtils exceptionUtils = new ExceptionUtils(CollectionActivity.this);
+                    exceptionUtils.exceptionMessage(exception, responseCode);
+                }
 
-            }
-        });
+                @Override
+                public void onFinish(int what) {
+
+                }
+            });
+        }
     }
-    /*//解析图片
-    public void getImages(){
-        String method="selectall";
-        String id="";
-        String url="http://115.28.78.82:8080/Didiweb/DidiServlet";
-        final Request<JSONArray> request= NoHttp.createJsonArrayRequest(url, RequestMethod.GET);
-        request.add("method",method);
-        request.add("id",id);
-        queue.add(NOHTTP_WHAT_PICTURES, request, new OnResponseListener<JSONArray>() {
-            @Override
-            public void onStart(int what) {
-
-            }
-
-            @Override
-            public void onSucceed(int what, Response<JSONArray> response) {
-
-            }
-
-            @Override
-            public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
-
-            }
-
-            @Override
-            public void onFinish(int what) {
-
-            }
-        });
-
-    }
-*/
 
 
 //返回
@@ -219,13 +221,13 @@ public class CollectionActivity extends AppCompatActivity {
                         DateUtils.FORMAT_SHOW_TIME|DateUtils.FORMAT_SHOW_DATE|DateUtils.FORMAT_ABBREV_ALL);
                 refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
-                new LoadDataAsyncTask(CollectionActivity.this).execute();
+                new LoadDataAsyncTask(CollectionActivity.this,incubatorID).execute();
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 //if (list.size()==)
-                new LoadDataAsyncTask(CollectionActivity.this).execute();//执行下载数据
+                new LoadDataAsyncTask(CollectionActivity.this,incubatorID).execute();//执行下载数据
             }
         });
 
@@ -233,8 +235,10 @@ public class CollectionActivity extends AppCompatActivity {
 
     static  class  LoadDataAsyncTask extends AsyncTask<Void,Void,String> {
         private CollectionActivity collectionActivity;
-        public LoadDataAsyncTask(CollectionActivity nohttpActivity){
+        private List<Integer> listID;
+        public LoadDataAsyncTask(CollectionActivity nohttpActivity,List<Integer> listID){
             this.collectionActivity=nohttpActivity;
+            this.listID=listID;
         }
 
         @Override
@@ -248,7 +252,7 @@ public class CollectionActivity extends AppCompatActivity {
             //加载数据
             collectionActivity.list.clear();
 
-            collectionActivity.doGet();
+            collectionActivity.doGet(listID);
             return "success";
         }
         //对返回值进行操作

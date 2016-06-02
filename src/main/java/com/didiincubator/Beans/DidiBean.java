@@ -12,8 +12,6 @@ public class DidiBean implements Serializable {
     private String name;//名称
     private String sketch;//简述
     private int detail_id;//详细介绍id
-
-
     private int station_id;//工位情况id
     private String type_didi;//孵化器项目类型
     private String phoneNumber;//电话
@@ -22,7 +20,7 @@ public class DidiBean implements Serializable {
     private float coordinateY;//位置坐标
     private String phonenumber;//联系电话
     private String headPortrait;//头像
-
+    private boolean isChecked;//标志当前行收藏图标是否被选中
     public DidiBean() {
     }
 
@@ -113,5 +111,14 @@ public class DidiBean implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 }
+
 

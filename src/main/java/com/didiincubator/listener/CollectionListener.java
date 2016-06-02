@@ -27,6 +27,7 @@ import java.util.List;
 /**
  * Created by 何晓 on 2016/5/30.
  */
+//删除收藏里面的条目
 public class CollectionListener {
     static final int NOHTTP_WHAT_TEST = 0x002;
     PullToRefreshListView listView;

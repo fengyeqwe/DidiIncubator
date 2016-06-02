@@ -22,6 +22,7 @@
         android:layout_height="match_parent"
         ptr:ptrDrawable="@drawable/default_ptr_flip"
         ptr:ptrAnimationStyle="flip"
+        android:background="#E8E6E6"
         >
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
 
