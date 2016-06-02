@@ -16,8 +16,9 @@ import com.didiincubator.Presenter.DetailPresenter;
 import com.didiincubator.R;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.QQShareContent;
+import com.umeng.socialize.media.QZoneShareContent;
 import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.media.UMusic;
 import com.umeng.socialize.sso.QZoneSsoHandler;
 
 import java.util.ArrayList;
@@ -115,31 +116,35 @@ public class DetailActivity extends AppCompatActivity implements IdetailVIew  {
         QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(DetailActivity.this
                 , "1105330645", "qizrvnP5AuHIs2ks");
         qZoneSsoHandler.addToSocialSDK();
-        //mController.setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能");
-        //  mController.setShareMedia(new UMImage(this, "http://www.umeng.com/images/pic/banner_module_social.png"));
-        // mController.setShareMedia(new UMusic("http://sns.whalecloud.com/test_music.mp3"));
-//图片
-        // UMImage localimage=new UMImage(this,R.drawable.qq);
-        UMImage urlimage = new UMImage(this, "http://www.umeng.com/images/pic/social/integrated_3.png");
+        mController.setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能");
+        //设置Qzone分享内容
+        QZoneShareContent qzone = new QZoneShareContent();
+        //设置分享文字
+        qzone.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能 -- QZone");
 
-// 设置分享音乐
-        UMusic uMusic = new UMusic("http://music.huoxing.com/upload/20130330/1364651263157_1085.mp3");
-        uMusic.setAuthor("GuGu");
-        uMusic.setTitle("天籁之音");
-// 设置音乐缩略图
-        uMusic.setThumb(urlimage);
-        mController.setShareMedia(uMusic);
+        //设置点击消息的跳转URL
+        qzone.setTargetUrl("你的URL链接");
+        //设置分享内容的标题
+        qzone.setTitle("QZone title");
+        //设置分享图片
+        qzone.setShareImage(new UMImage(this, R.drawable.app));
+        mController.setShareMedia(qzone);
 
 
-/*
-//设置分享视频
-        UMVideo umVideo = new UMVideo(
-                "http://v.youku.com/v_show/id_XNTE5ODAwMDM2.html?f=19001023");
-        //设置视频缩略图
-        umVideo.setThumb("http://www.umeng.com/images/pic/banner_module_social.png");
-        umVideo.setTitle("友盟社会化分享!");
-        mController.setShareMedia(umVideo);
-*/
+        //设置QQ分享内容使用下面的代码：
+
+        QQShareContent qqShareContent = new QQShareContent();
+        //设置分享文字
+        qqShareContent.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能 -- QQ");
+        //设置分享title
+        qqShareContent.setTitle("hello, title");
+        //设置分享图片
+        qqShareContent.setShareImage(new UMImage(this, R.drawable.app));
+        qqShareContent.isMultiMedia();
+        //设置点击分享内容的跳转链接
+        qqShareContent.setTargetUrl("你的URL链接");
+        mController.setShareMedia(qqShareContent);
+
     }
 
 

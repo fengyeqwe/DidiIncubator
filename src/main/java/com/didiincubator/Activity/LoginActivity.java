@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -39,14 +41,14 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
 
-public class LoginActivity extends Activity implements View.OnClickListener {
+public class
+LoginActivity extends Activity implements View.OnClickListener {
 
     SharedPreferences sp;
-    //AutoCompleteTextView username2;
+    AutoCompleteTextView username2;
     CheckBox jizhumimaButton;
     CheckBox zidongdengluButton;
     Button dengluButton;
-    EditText username2;
     EditText password2;
     Button mBtnBindPhone;
     ImageButton sinaLoginButton;
@@ -66,6 +68,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         //初始化sdk
         SMSSDK.initSDK(this, APPKey, AppSecret, true);
         //创建实例对象
+        sp = this.getSharedPreferences("network_url", MODE_PRIVATE);
         sp = this.getSharedPreferences("passwordFile", MODE_PRIVATE);
         zidongdengluButton = (CheckBox) findViewById(R.id.zidongdenglukuang);
         jizhumimaButton = (CheckBox) findViewById(R.id.jizhumimakuang);
@@ -74,8 +77,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         qqLoginButton = (ImageButton) findViewById(R.id.qqdenglu);
         zhuceButton = (Button) findViewById(R.id.lijizhuce);
         dengluButton = (Button) findViewById(R.id.denglu);
-        username2 = (EditText) findViewById(R.id.zhanghao);
+        username2 = (AutoCompleteTextView) findViewById(R.id.zhanghao);
         password2 = (EditText) findViewById(R.id.mima);
+        username2.setOnClickListener(this);
         jizhumimaButton.setOnClickListener(this);
         zidongdengluButton.setOnClickListener(this);
         sinaLoginButton.setOnClickListener(this);
@@ -99,47 +103,49 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             }
         }
 
-     /*   username2.setThreshold(1);// 输入1个字母就开始自动提示*/
+
         password2.setInputType(InputType.TYPE_CLASS_TEXT
                 | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         // 隐藏密码为InputType.TYPE_TEXT_VARIATION_PASSWORD，也就是0x81
         // 显示密码为InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD，也就是0x91
         loginRongIM();//连接融云
-
-        /*Intent data = getIntent();		// 获取 Intent
-        if(data != null){
-            String uname = data.getStringExtra("uname");
-            String upass = data.getStringExtra("upass");
-            username.setText(uname);
-            password.setText(upass);
-        }*/
         // 配置需要分享的相关平台
         configPlatforms();
         // 设置分享的内容
         setShareContent();
-        /*//首字母提示
-        username2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        //自动补全提示的账户名
+        Log.e("login","------------");
+        initAutoComplete("history", username2);
+    }
 
-            }
+    private void initAutoComplete(String field, AutoCompleteTextView auto) {
+        SharedPreferences sp = getSharedPreferences("network_url", MODE_PRIVATE);
+        String loginhistory = sp.getString("history", "nothing");
+        String[] hisArrays = loginhistory.split(",");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, hisArrays);
+        //只保留最近的20条的记录
+        if (hisArrays.length > 20) {
+            String[] newArrays = new String[20];
+            System.arraycopy(hisArrays, 0, newArrays, 0, 20);
+            adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_dropdown_item_1line, newArrays);
+        }
+         /*   Log.e("login",newArrays.toString());*/
+            auto.setAdapter(adapter);
+            auto.setDropDownHeight(350);
+            auto.setThreshold(1);//从第一个字母开始提示
+            auto.setCompletionHint("最近的5条记录");
+            auto.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String[] allUserName = new String[sp.getAll().size()];
-                allUserName = sp.getAll().keySet().toArray(new String[0]);
-                // sp.getAll()返回一张hash map
-                // keySet()得到的是a set of the keys.
-                // hash map是由key-value组成的
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(LoginActivity.this, android.R.layout.simple_dropdown_item_1line, allUserName);
-                username2.setAdapter(adapter);// 设置数据适配器
-            }
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    AutoCompleteTextView view = (AutoCompleteTextView) v;
+                    if (hasFocus) {
+                        view.showDropDown();
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                password2.setText(sp.getString(username2.getText().toString(), ""));// 自动输入密码
+                }
             }
-        });*/
+        });
     }
 
     /**
@@ -313,8 +319,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 if (TextUtils.isEmpty(uname2) || TextUtils.isEmpty(upass2)) {
                     Toast.makeText(this, "用户名密码不能为空！", Toast.LENGTH_SHORT).show();
                     //假设默认用户名为fei，密码为123
-                } else if (uname2.equals("fei") && upass2.equals("123")) {
+                } else if (uname2.equals("luofei") && upass2.equals("123456")) {
                     Toast.makeText(this, "登录成功！", Toast.LENGTH_SHORT).show();
+                    // 这里可以设定：当搜索成功时，才执行保存操作
+                    saveHistory("history", username2);
                     //登陆成功且记住密码框选中才会保存用户信息
                     if (jizhumimaButton.isChecked()) {
                         //记住用户名密码
@@ -374,6 +382,18 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    //保存历史账户输入
+    private void saveHistory(String field, AutoCompleteTextView auto) {
+        String text = auto.getText().toString();
+        SharedPreferences sp = getSharedPreferences("network_url", MODE_PRIVATE);
+        String loginhistory = sp.getString(field, "nothing");
+        if (!loginhistory.contains(text + ",")) {
+            StringBuilder sb = new StringBuilder(loginhistory);
+            sb.insert(0, text + ",");
+            sp.edit().putString("history", sb.toString()).commit();
+        }
+    }
+
     //提交用户信息
     public void submitUserInfo(String country, String phone) {
         Random r = new Random();
@@ -385,7 +405,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public void testLogin(View view) {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-       // finish();
+        // finish();
 
     }
 
