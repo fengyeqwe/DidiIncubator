@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ public class SetActivity extends AppCompatActivity {
     ImageView imageSet;
     CheckBox checkUpdate, checkSend;
     TextView textClearJL, textClearHC;
+    Button out_loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,7 @@ public class SetActivity extends AppCompatActivity {
     }
 
     private void initView() {
-
+out_loginButton= (Button) findViewById(R.id.out_loginButton);
         imageSet = (ImageView) findViewById(R.id.set_back);
         checkUpdate = (CheckBox) findViewById(R.id.set_update);
         checkSend = (CheckBox) findViewById(R.id.set_sendMessage);
@@ -71,6 +73,17 @@ public class SetActivity extends AppCompatActivity {
                         }
                     }).show();
 
+                }
+            }
+        });
+
+        out_loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.isClickable()){
+                    Intent intent=new Intent();
+                    intent.setClass(SetActivity.this,LoginActivity.class);
+                    startActivity(intent);
                 }
             }
         });

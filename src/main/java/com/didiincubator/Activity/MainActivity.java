@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
     SQLiteDatabase mDataBase;
     //声明数据库辅助类对象
     HistoryHelper mHistoryHelper;
+    private Bundle bundle;
 
 
     @Override
@@ -407,7 +409,7 @@ public class MainActivity extends AppCompatActivity {
         baiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                Bundle bundle = marker.getExtraInfo();
+                bundle = marker.getExtraInfo();
                 DidiBean info = (DidiBean) bundle.getSerializable("info");
                 Glide.with(MainActivity.this).load(info.getHeadPortrait()).centerCrop().crossFade()
                         .into(imageView);
@@ -519,8 +521,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent=new Intent(MainActivity.this, DetailActivity.class);
+                DidiBean info = (DidiBean) bundle.getSerializable("info");
+                int id=info.getId();
+
+                intent.putExtra("id",id+"");
                 startActivity(intent);
-                addhistory(incubator.getId());//点击孵化器时，向sqlite添加历史记录
+                addhistory(id);//点击孵化器时，向sqlite添加历史记录
             }
 
             private void addhistory(int id) {

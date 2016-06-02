@@ -3,6 +3,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="16sp"
+    android:paddingBottom="16sp"
+    android:paddingRight="16sp"
+    android:paddingTop="16sp"
     android:background="@drawable/backgroundpic"
     android:orientation="vertical">
 
@@ -23,7 +27,9 @@
         android:textColor="#000"
         android:textSize="16dp" />
 
-    <EditText
+
+
+    <AutoCompleteTextView
         android:id="@+id/zhanghao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
