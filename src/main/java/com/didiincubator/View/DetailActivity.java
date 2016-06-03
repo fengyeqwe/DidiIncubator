@@ -52,6 +52,7 @@ import io.rong.imkit.RongIM;
 
 
 public class DetailActivity extends AppCompatActivity {
+    public static final String MYHTTP = "http://10.201.1.46:8080/Didiweb/";
     ViewPager mViewPager;//image滑动图
     @Bind(R.id.details_btn_back)
     ImageView mDetailsBtnBack;//返回键
@@ -235,7 +236,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getDidi(String id) {
-        String url = "http://10.201.1.152:8080/Didiweb/DidiServlet";
+        String url = MYHTTP+"DidiServlet";
         Request<JSONArray> request = NoHttp.createJsonArrayRequest(url);
         request.add("method", "select");
         request.add("id", id);
@@ -271,7 +272,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getImages() {
-        String url = "http://10.201.1.152:8080/Didiweb/picturesServlet";
+        String url = MYHTTP+"picturesServlet";
         Request<JSONArray> imgRequest = NoHttp.createJsonArrayRequest(url);
         imgRequest.add("method", "select");
         imgRequest.add("id", didi.getId());
@@ -311,7 +312,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getStation() {
-        String url = "http://10.201.1.152:8080/Didiweb/gongweiServlet";
+        String url = MYHTTP+"gongweiServlet";
         Request<JSONArray> stationRequest = NoHttp.createJsonArrayRequest(url);
         stationRequest.add("method", "select");
         stationRequest.add("id", didi.getStation_id());
@@ -347,7 +348,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getDetail() {
-        String url = "http://10.201.1.152:8080/Didiweb/detailServlet";
+        String url = MYHTTP +"detailServlet";
         Request<JSONArray> detailrequest = NoHttp.createJsonArrayRequest(url);
         detailrequest.add("method", "select");
         detailrequest.add("id", didi.getDetail_id());

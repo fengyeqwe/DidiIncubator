@@ -18,12 +18,10 @@ public class DidiBean implements Serializable {
     private String type_didi;//孵化器项目类型
     private String phonenumber;//联系电话
     private String headPortrait;//头像
-<<<<<<< HEAD
     private boolean isChecked;//标志当前行收藏图标是否被选中
-=======
     private String address;//具体地址
 
->>>>>>> 260ebfdcaf921a0708fb26f943258333f3147036
+
     public DidiBean() {
     }
 

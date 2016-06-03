@@ -75,20 +75,13 @@ public class AllAdapter extends BaseAdapter{
         ImageView all_picture;
         CheckBox all_collection;
         public ViewHolder(View view){
-<<<<<<< HEAD
             all_name= (TextView) view.findViewById(R.id.all_name);
             all_dayPrice= (TextView) view.findViewById(R.id.all_dayPrice);
             all_price= (TextView) view.findViewById(R.id.all_price);
             all_area= (TextView) view.findViewById(R.id.all_area);
             all_gongWei= (TextView) view.findViewById(R.id.all_gongWei);
             all_picture= (ImageView) view.findViewById(R.id.all_picture);
-            all_collection= (CheckBox) view.findViewById(R.id.all_collection);
-=======
-           // textView1= (TextView) view.findViewById(R.id.tv_1);
-            textView2= (TextView) view.findViewById(R.id.tv_2);
-           //textView3= (TextView) view.findViewById(R.id.tv_3);
 
->>>>>>> 260ebfdcaf921a0708fb26f943258333f3147036
         }
 
         //监听是否选中收藏按钮

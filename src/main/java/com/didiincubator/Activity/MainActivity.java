@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
     private void initMarkerData() {
         String method = "selectall";
         String name = "";
-        String url = "http://10.201.1.152:8080/Didiweb/DidiServlet";
+        String url = "http://115.28.78.82:8080/Didiweb/DidiServlet";
         final Request<JSONArray> request = NoHttp.createJsonArrayRequest(url, RequestMethod.GET);
         request.add("method", method);
         request.add("name", name);
