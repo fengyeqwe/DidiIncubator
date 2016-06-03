@@ -12,22 +12,29 @@ public class DidiBean implements Serializable {
     private String name;//名称
     private String sketch;//简述
     private int detail_id;//详细介绍id
-
-
     private int station_id;//工位情况id
-    private String type_didi;//孵化器项目类型
-    private String phoneNumber;//电话
-    private int Station_id;//工位情况id
     private float coordinateX;
     private float coordinateY;//位置坐标
+    private String type_didi;//孵化器项目类型
     private String phonenumber;//联系电话
     private String headPortrait;//头像
+    private boolean isChecked;//标志当前行收藏图标是否被选中
+    private String address;//具体地址
+
 
     public DidiBean() {
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public void setId(int id) {
@@ -106,12 +113,32 @@ public class DidiBean implements Serializable {
         this.type_didi = type_didi;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+
+    @Override
+    public String toString() {
+        return "DidiBean{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", sketch='" + sketch + '\'' +
+                ", detail_id=" + detail_id +
+                ", station_id=" + station_id +
+                ", type_didi='" + type_didi + '\'' +
+
+                ", coordinateX=" + coordinateX +
+                ", coordinateY=" + coordinateY +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", headPortrait='" + headPortrait + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }
+
 

@@ -3,21 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:divider="@drawable/line"
     android:orientation="vertical"
     android:showDividers="middle|end"
-    android:divider="@drawable/line"
     tools:context="com.didiincubator.incubator.SetActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#8FD3FD"
-        >
+        android:background="#8FD3FD">
+
         <ImageView
             android:id="@+id/set_back"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:src="@drawable/back"
-            />
+            android:src="@drawable/back" />
+
         <TextView
             android:id="@+id/history_text"
             android:layout_width="wrap_content"
@@ -26,64 +27,79 @@
             android:layout_marginLeft="85dp"
             android:text="设置"
             android:textSize="22sp"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="20dp"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="版本更新通知"
             android:layout_gravity="center"
-            android:textSize="20sp"
-            />
+            android:text="版本更新通知"
+            android:textSize="20sp" />
+
         <CheckBox
             android:id="@+id/set_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="150dp"/>
+            android:layout_marginLeft="150dp" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="20dp"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="推送信息"
             android:layout_gravity="center"
-            android:textSize="20sp"
-            />
+            android:text="推送信息"
+            android:textSize="20sp" />
+
         <CheckBox
             android:id="@+id/set_sendMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="189dp"/>
+            android:layout_marginLeft="189dp" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/set_clearSouSuo"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
         android:text="清除本地搜索记录"
-        android:textSize="20sp"
-        />
+        android:textSize="20sp" />
+
     <TextView
         android:id="@+id/set_clearHc"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
         android:text="清除缓存"
-        android:textSize="20sp"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/out_loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:text="退出当前账号"
+        android:textColor="@color/colorRed"
+        android:textSize="20dp"
+
         />
 </LinearLayout>

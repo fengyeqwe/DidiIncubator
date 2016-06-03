@@ -142,5 +142,6 @@
     <orderEntry type="library" exported="" name="SMSSDKGUI-2.0.2-" level="project" />
     <orderEntry type="library" exported="" name="baidumapapi_util_v3_7_3" level="project" />
     <orderEntry type="module" module-name="IMKit" exported="" />
+    <orderEntry type="library" exported="" name="org.apache.http.legacy-android-23" level="project" />
   </component>
 </module>

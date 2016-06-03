@@ -73,4 +73,21 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <style name="CollectionCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/collection_select</item>
+    </style>
+
+    <string-array name="times">
+        <item>一个月</item>
+        <item>两个月</item>
+        <item>三个月</item>
+        <item>四个月</item>
+        <item>五个月</item>
+        <item>一个月</item>
+        <item>一个月</item>
+        <item>一个月</item>
+        <item>一个月</item>
+        <item>一个月</item>
+        <item>一个月</item>
+    </string-array>
 </resources>
