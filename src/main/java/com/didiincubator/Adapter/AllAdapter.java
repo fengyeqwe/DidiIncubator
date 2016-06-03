@@ -81,7 +81,7 @@ public class AllAdapter extends BaseAdapter{
             all_area= (TextView) view.findViewById(R.id.all_area);
             all_gongWei= (TextView) view.findViewById(R.id.all_gongWei);
             all_picture= (ImageView) view.findViewById(R.id.all_picture);
-
+            all_collection= (CheckBox) view.findViewById(R.id.all_collection);
         }
 
         //监听是否选中收藏按钮
@@ -92,17 +92,16 @@ public class AllAdapter extends BaseAdapter{
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked){
                         //说明用户选中了第position行
-
                         CollectionAdd collectionAdd=new CollectionAdd();
-                        collectionAdd.addIncubator(id);
                         Toast.makeText(context, "收藏了："+id, Toast.LENGTH_SHORT).show();
                         incubator.setChecked(true);
+                        collectionAdd.addIncubator(id);
                     }else {
                         //说明用户取消了第position
                         CollectionCancle collectionCancle=new CollectionCancle();
-                        collectionCancle.cancleIncubator(id);
                         Toast.makeText(context, "取消收藏了："+id, Toast.LENGTH_SHORT).show();
                         incubator.setChecked(false);
+                        collectionCancle.cancleIncubator(id);
                     }
                 }
             });

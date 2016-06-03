@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/intor1"/>
+       />
     <LinearLayout
         android:layout_below="@+id/iv_marker"
         android:orientation="vertical"

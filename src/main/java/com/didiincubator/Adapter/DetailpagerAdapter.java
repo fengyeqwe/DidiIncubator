@@ -7,10 +7,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-/**
- * Created by fengye
- * 1 on 2016/6/2.
- */
+
 public class DetailpagerAdapter extends PagerAdapter {
     private List<View> mViews;
     public DetailpagerAdapter(List<View> mViews){

@@ -19,6 +19,8 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     //标志物解析数据
     RequestQueue queue=NoHttp.newRequestQueue();;
     //static  final int NOHTTP_MARKER=0x001;
-
+    //延迟执行initOVerlay()方法
     private Handler handler=new Handler(){
         public void dispatchMessage(Message message){
             if (1==message.what){
@@ -121,12 +123,17 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     PullToRefreshListView pullToRefreshListView;
     AllAdapter adapter;
+    //搜索
+    EditText searchEditText;
+    Button searchButton;
+
     //声明数据库操作类
     SQLiteDatabase mDataBase;
     //声明数据库辅助类对象
     HistoryHelper mHistoryHelper;
     private Bundle bundle;
-
+    //个人信息
+   View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -145,6 +152,10 @@ public class MainActivity extends AppCompatActivity {
         //初始化左侧滑中的控件
         drawerLayout= (DrawerLayout) findViewById(R.id.dl_left);
         navigationView= (NavigationView) findViewById(R.id.nv_left);
+        //View view=navigationView.inflateHeaderView(R.layout.navigation_header);
+       /* userIcon= (ImageView) view.findViewById(R.id.user_headicon);
+        userName= (TextView) view.findViewById(R.id.user_name);*/
+        view=navigationView.getHeaderView(0);
         toolbar= (Toolbar) findViewById(R.id.toolbar_left);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
@@ -161,10 +172,10 @@ public class MainActivity extends AppCompatActivity {
         pullToRefreshListView.setAdapter(adapter);
         initNavigation();
         initMyLocation();
-        initMarkerListener();//监听事件
+        initMarkerListener();//标注物监听事件
         initEggListener();//监听主界面蛋的点击事件，显示附近孵化器列表
-
-
+        userMessage();
+        editListener();//监听搜索事件
     }
 
 
@@ -180,16 +191,16 @@ public class MainActivity extends AppCompatActivity {
         baiduMap.setMapStatus(factory);
         labelDescriptor= BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
         relativeLayout= (RelativeLayout) findViewById(R.id.rl_marker);
-
-
         //初始化蛋
         eggImageView= (ImageView) findViewById(R.id.egg);
         linearLayout= (LinearLayout) findViewById(R.id.egg_linearLayout);
         pullToRefreshListView= (PullToRefreshListView) findViewById(R.id.egg_listView);
+        //搜索
+        searchEditText= (EditText) findViewById(R.id.suosou);
+        searchButton= (Button) findViewById(R.id.search_button);
 
         //初始化historyHelper
         mHistoryHelper=new HistoryHelper(MainActivity.this);
-
 
 
 
@@ -558,6 +569,33 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    //修改个人信息
+    public void userMessage(){
+      view.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              startActivity(new Intent(MainActivity.this,ModifyUserMessageActivity.class));
+          }
+      });
+    }
+
+    //TODO 搜索事件
+    public void editListener(){
+       searchButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               String incubatorName=searchEditText.getText().toString().trim();
+               getSearchIncubator(incubatorName);
+               /*Bundle bundle=new Bundle();
+               bundle.putString("name",incubatorName);*/
+               //Toast.makeText(context, "名字"+incubatorName, Toast.LENGTH_SHORT).show();
+           }
+       });
+    }
+    //通过得到的名字来进行查询
+    public void getSearchIncubator(String name){
+        Toast.makeText(context, "mingzi:"+name, Toast.LENGTH_SHORT).show();
     }
 
 }
