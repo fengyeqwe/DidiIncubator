@@ -50,18 +50,18 @@
                 <EditText
                     android:id="@+id/suosou"
                     android:layout_width="0dp"
-                    android:layout_weight="5"
                     android:layout_height="45dp"
+                    android:layout_weight="5"
                     android:hint="请输入孵化器的名字"
                     android:textColor="#21282D"
                     android:drawableLeft="@drawable/serach"
                     android:background="@drawable/edit_sousuo"
                     />
                 <Button
-                    android:id="@+id/sousuo_incubator"
+                    android:id="@+id/search_button"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_height="45dp"
                     android:text="搜索"
                     />
             </LinearLayout>

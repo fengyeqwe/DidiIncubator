@@ -52,16 +52,16 @@
 
         <activity
             android:name=".Activity.MainActivity"
-            android:launchMode="singleTask"></activity>
-        <activity android:name=".View.DetailActivity"></activity>
-        <activity android:name=".View.ApplyActivity"></activity>
-        <activity android:name=".View.MyApplyActivity"></activity>
-        <activity android:name=".Activity.AboutActivity"></activity>
-        <activity android:name=".Activity.CollectionActivity"></activity>
-        <activity android:name=".Activity.DataActivity"></activity>
-        <activity android:name=".View.HistoryActivity"></activity>
-        <activity android:name=".Activity.MessageActivity"></activity>
-        <activity android:name=".Activity.SetActivity"></activity>
+            android:launchMode="singleTask" />
+        <activity android:name=".View.DetailActivity" />
+        <activity android:name=".View.ApplyActivity" />
+        <activity android:name=".View.MyApplyActivity" />
+        <activity android:name=".Activity.AboutActivity" />
+        <activity android:name=".Activity.CollectionActivity" />
+        <activity android:name=".Activity.DataActivity" />
+        <activity android:name=".View.HistoryActivity" />
+        <activity android:name=".Activity.MessageActivity" />
+        <activity android:name=".Activity.SetActivity" />
         <activity
             android:name=".View.ConversationActivity"
             android:screenOrientation="portrait"
@@ -130,6 +130,7 @@
             android:name=".Activity.ZhuCeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".Activity.FuwuxieyiActivity" />
+        <activity android:name=".Activity.ModifyUserMessageActivity"></activity>
     </application>
 
 </manifest>

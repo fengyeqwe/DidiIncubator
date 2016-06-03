@@ -75,7 +75,6 @@ public class AllAdapter extends BaseAdapter{
         ImageView all_picture;
         CheckBox all_collection;
         public ViewHolder(View view){
-<<<<<<< HEAD
             all_name= (TextView) view.findViewById(R.id.all_name);
             all_dayPrice= (TextView) view.findViewById(R.id.all_dayPrice);
             all_price= (TextView) view.findViewById(R.id.all_price);
@@ -83,12 +82,6 @@ public class AllAdapter extends BaseAdapter{
             all_gongWei= (TextView) view.findViewById(R.id.all_gongWei);
             all_picture= (ImageView) view.findViewById(R.id.all_picture);
             all_collection= (CheckBox) view.findViewById(R.id.all_collection);
-=======
-           // textView1= (TextView) view.findViewById(R.id.tv_1);
-            textView2= (TextView) view.findViewById(R.id.tv_2);
-           //textView3= (TextView) view.findViewById(R.id.tv_3);
-
->>>>>>> 260ebfdcaf921a0708fb26f943258333f3147036
         }
 
         //监听是否选中收藏按钮
@@ -99,17 +92,16 @@ public class AllAdapter extends BaseAdapter{
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked){
                         //说明用户选中了第position行
-
                         CollectionAdd collectionAdd=new CollectionAdd();
-                        collectionAdd.addIncubator(id);
                         Toast.makeText(context, "收藏了："+id, Toast.LENGTH_SHORT).show();
                         incubator.setChecked(true);
+                        collectionAdd.addIncubator(id);
                     }else {
                         //说明用户取消了第position
                         CollectionCancle collectionCancle=new CollectionCancle();
-                        collectionCancle.cancleIncubator(id);
                         Toast.makeText(context, "取消收藏了："+id, Toast.LENGTH_SHORT).show();
                         incubator.setChecked(false);
+                        collectionCancle.cancleIncubator(id);
                     }
                 }
             });

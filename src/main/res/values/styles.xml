@@ -83,5 +83,9 @@
         <item name="android:layout_marginTop">6dp</item>
         <item name="android:layout_marginBottom">6dp</item>
     </style>
-
+    <style name="progressStyle">
+        <item name="android:indeterminateDrawable">@anim/load_incubator_message</item>
+        <item name="android:minWidth">400dip</item>
+        <item name="android:minHeight">400dip</item>
+    </style>
 </resources>

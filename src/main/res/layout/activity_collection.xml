@@ -28,12 +28,35 @@
             android:textStyle="bold"
             />
     </LinearLayout>
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/collection_listview"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        ptr:ptrDrawable="@drawable/default_ptr_flip"
-        ptr:ptrAnimationStyle="flip"
-        >
-    </com.handmark.pulltorefresh.library.PullToRefreshListView>
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/load_progressBar"
+            style="@style/progressStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            />
+        <TextView
+            android:id="@+id/load_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="正在加载中......"
+            android:textSize="20sp"
+            android:layout_below="@+id/load_progressBar"
+            android:layout_centerHorizontal="true"
+            />
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:id="@+id/collection_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ptr:ptrDrawable="@drawable/default_ptr_flip"
+            ptr:ptrAnimationStyle="flip"
+            >
+        </com.handmark.pulltorefresh.library.PullToRefreshListView>
+    </RelativeLayout>
+
+
 </LinearLayout>
