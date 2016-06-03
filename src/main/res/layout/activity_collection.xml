@@ -5,33 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:weightSum="10"
     >
     <LinearLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="#8FD3FD"
         >
         <ImageView
             android:id="@+id/collection_back"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:src="@drawable/back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_back"
             />
         <TextView
-            android:id="@+id/collection_text"
+            android:id="@+id/history_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="85dp"
+            android:layout_centerInParent="true"
             android:text="收藏"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             />
     </LinearLayout>
 
     <RelativeLayout
+        android:layout_weight="9"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp">
         <ProgressBar
             android:id="@+id/load_progressBar"
             style="@style/progressStyle"
@@ -57,6 +61,4 @@
             >
         </com.handmark.pulltorefresh.library.PullToRefreshListView>
     </RelativeLayout>
-
-
 </LinearLayout>

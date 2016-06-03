@@ -82,6 +82,7 @@ public class AllAdapter extends BaseAdapter{
             all_gongWei= (TextView) view.findViewById(R.id.all_gongWei);
             all_picture= (ImageView) view.findViewById(R.id.all_picture);
             all_collection= (CheckBox) view.findViewById(R.id.all_collection);
+
         }
 
         //监听是否选中收藏按钮

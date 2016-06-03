@@ -3,11 +3,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="16sp"
-    android:paddingBottom="16sp"
-    android:paddingRight="16sp"
-    android:paddingTop="16sp"
-    android:background="@drawable/backgroundpic"
+    android:background="@drawable/login_background"
+
     android:orientation="vertical">
 
     <ImageView
@@ -15,7 +12,8 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/app" />
+        android:src="@drawable/icon_didi"
+        android:layout_marginTop="16dp"/>
 
     <TextView
         android:id="@+id/didizhdl"
@@ -25,7 +23,8 @@
         android:layout_marginTop="30dp"
         android:text="滴滴账号登录"
         android:textColor="#000"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        android:layout_marginLeft="10dp"/>
 
 
 
@@ -36,7 +35,9 @@
         android:layout_below="@+id/didizhdl"
         android:layout_marginTop="5dp"
         android:hint="用户名"
-        android:textSize="25dip" />
+        android:textColorHint="#fff"
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"/>
 
     <EditText
         android:id="@+id/mima"
@@ -45,17 +46,22 @@
         android:layout_below="@+id/zhanghao"
         android:layout_marginTop="10dp"
         android:hint="密码"
-        android:textSize="25dip" />
+        android:textColorHint="#fff"
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"/>
 
     <Button
+
         android:id="@+id/denglu"
         android:layout_width="350dp"
         android:layout_height="40dp"
         android:layout_below="@+id/mima"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/shape"
-        android:text="登录" />
+        android:layout_marginTop="80dp"
+        android:background="@color/smssdk_transparent"
+        android:text="登录"
+        android:textSize="25sp"
+        android:textColor="#fff"/>
 
     <Button
         android:id="@+id/lijizhuce"
@@ -65,7 +71,8 @@
         android:layout_below="@+id/denglu"
         android:background="@android:color/transparent"
         android:text="立即注册"
-        android:textColor="@color/colorOringe" />
+        android:textSize="18sp"
+        android:textColor="#fff" />
 
     <Button
         android:id="@+id/shoujidenglu"
@@ -75,7 +82,8 @@
         android:layout_below="@+id/denglu"
         android:background="@android:color/transparent"
         android:text="手机快捷登陆>>"
-        android:textColor="@color/colorOringe" />
+        android:textSize="18sp"
+        android:textColor="#fff" />
 
     <TextView
         android:id="@+id/otherway"
@@ -84,7 +92,8 @@
         android:layout_below="@id/lijizhuce"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:text="其他方式登录" />
+        android:text="其他方式登录"
+        android:textColor="#000"/>
 
     <ImageButton
         android:id="@+id/qqdenglu"
@@ -93,17 +102,16 @@
         android:layout_below="@id/otherway"
        android:layout_toRightOf="@+id/jizhumima"
         android:background="@android:color/transparent"
-        android:src="@drawable/qq" />
+        android:src="@drawable/icon_qq" />
 
     <ImageButton
         android:id="@+id/wbdenglu"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_below="@id/otherway"
-
-       android:layout_toLeftOf="@+id/zidongdenglukuang"
+        android:layout_toLeftOf="@+id/zidongdenglukuang"
         android:background="@android:color/transparent"
-        android:src="@drawable/weibo" />
+        android:src="@drawable/icon_weibo" />
 
     <CheckBox
         android:id="@+id/jizhumimakuang"
@@ -122,9 +130,9 @@
        android:layout_toRightOf="@+id/jizhumimakuang"
         android:layout_below="@+id/mima"
         android:layout_marginLeft="10dp"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:layout_marginTop="15dp"
-        android:textColor="#999"
+        android:textColor="#c1bbbb"
         />
 
     <CheckBox
@@ -146,6 +154,6 @@
         android:layout_marginLeft="10dp"
         android:textSize="16sp"
         android:layout_marginTop="15dp"
-        android:textColor="#999"
+        android:textColor="#c1bbbb"
         />
 </RelativeLayout>

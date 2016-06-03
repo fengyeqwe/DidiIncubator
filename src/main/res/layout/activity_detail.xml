@@ -18,6 +18,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/btn_back"/>
 
         <ImageView
@@ -26,6 +27,7 @@
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             android:src="@drawable/btn_collection_null"/>
 
         <TextView
@@ -34,9 +36,9 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="qwer"
+            android:text="无界空间"
             android:textColor="@color/colorWhite"
-            android:textSize="40px"/>
+            android:textSize="20sp"/>
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager
