@@ -6,42 +6,46 @@
     android:divider="@drawable/line"
     android:orientation="vertical"
     android:showDividers="middle|end"
+    android:weightSum="10"
     tools:context="com.didiincubator.incubator.SetActivity">
 
-    <LinearLayout
+    <RelativeLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="#8FD3FD">
 
         <ImageView
             android:id="@+id/set_back"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:src="@drawable/back" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/icon_back"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"/>
 
         <TextView
             android:id="@+id/history_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="85dp"
+            android:layout_centerInParent="true"
             android:text="设置"
-            android:textSize="22sp"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
             android:textStyle="bold" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp">
+        android:layout_height="0dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="版本更新通知"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_marginLeft="20dp"/>
 
         <CheckBox
             android:id="@+id/set_update"
@@ -52,17 +56,17 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp">
+        android:layout_height="0dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="推送信息"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_marginLeft="20dp"/>
 
         <CheckBox
             android:id="@+id/set_sendMessage"
@@ -73,27 +77,30 @@
     </LinearLayout>
 
     <TextView
+        android:layout_weight="1"
         android:id="@+id/set_clearSouSuo"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="0dp"
         android:text="清除本地搜索记录"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="20dp"/>
 
     <TextView
+        android:layout_weight="1"
         android:id="@+id/set_clearHc"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="0dp"
         android:text="清除缓存"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="20dp"/>
 
     <Button
+        android:layout_weight="1"
         android:id="@+id/out_loginButton"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
         android:background="@android:color/transparent"
         android:gravity="center_vertical"
         android:paddingLeft="20dp"

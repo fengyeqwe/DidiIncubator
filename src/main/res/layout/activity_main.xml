@@ -58,6 +58,7 @@
                     android:background="@drawable/edit_sousuo"
                     />
                 <Button
+                    android:background="#a0ffffff"
                     android:id="@+id/sousuo_incubator"
                     android:layout_width="0dp"
                     android:layout_weight="1"
