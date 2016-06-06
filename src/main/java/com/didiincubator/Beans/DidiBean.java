@@ -21,7 +21,6 @@ public class DidiBean implements Serializable {
     private boolean isChecked;//标志当前行收藏图标是否被选中
     private String address;//具体地址
 
-
     public DidiBean() {
     }
 

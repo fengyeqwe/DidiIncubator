@@ -23,7 +23,7 @@ public class CollectionCancle {
         String method="delete";
         int user_id=1;
         int didi_id=id;
-        String url="http://10.201.1.152:8080/Didiweb/collectionServlet";
+        String url="http://115.28.78.82:8080/Didiweb/collectionServlet";
         Request<JSONArray> request=NoHttp.createJsonArrayRequest(url, RequestMethod.GET);
         request.add("method",method);
         request.add("user_id",user_id);

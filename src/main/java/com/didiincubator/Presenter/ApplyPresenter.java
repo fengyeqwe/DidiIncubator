@@ -1,5 +1,8 @@
 package com.didiincubator.Presenter;
 
+import android.os.Handler;
+import android.os.Message;
+
 import com.didiincubator.Beans.ApplyBean;
 import com.didiincubator.Model.ApplyModel;
 import com.didiincubator.Model.IApplyModel;
@@ -18,7 +21,7 @@ public class ApplyPresenter {
 
     }
 
-    public Boolean submit() {
+    public int submit(Handler handler) {
         ApplyBean applyBean = new ApplyBean();
         applyBean.setUser_id(mIApplyView.getUser_id());
         applyBean.setDidi_id( mIApplyView.getDidi_id());
@@ -27,7 +30,8 @@ public class ApplyPresenter {
         applyBean.setLookhousetime(mIApplyView.getLookhousetime());
         applyBean.setExtra(mIApplyView.getExtra());
         //mIApplyView.getPhone();
-        return mIApplyModel.submit(applyBean);
+
+        return mIApplyModel.submit(applyBean,handler);
     }
 
 

@@ -2,6 +2,8 @@ package com.didiincubator.View;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -61,18 +63,38 @@ public class ApplyActivity extends AppCompatActivity implements IApplyView {
                 break;
             case R.id.apply_submit:
                 submitApply();
-                //跳转申请页
-                Intent intent = new Intent(ApplyActivity.this, MyApplyActivity.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putSerializable("didi", didi);
-                intent.putExtras(mBundle);
-                startActivity(intent);
+
                 break;
         }
     }
 
     private void submitApply() {
-        applyPresenter.submit();
+
+        Handler handler = new Handler() {
+
+            public static final int MSG = 0x111;
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.what == MSG) {
+                    int result = msg.getData().getInt("apply_id");
+                    if (result!=0){
+                        //跳转申请页
+                        Intent intent = new Intent(ApplyActivity.this, MyApplyActivity.class);
+                        intent.putExtra("apply_id",result);
+           /* Bundle mBundle = new Bundle();
+            mBundle.putSerializable("didi", didi);
+            intent.putExtras(mBundle);*/
+                        startActivity(intent);
+                    }
+
+                }
+            }
+
+        };
+        applyPresenter.submit(handler);
+
 
     }
 

@@ -1,5 +1,7 @@
 package com.didiincubator.Model;
 
+import android.os.Handler;
+
 import com.didiincubator.Beans.ApplyBean;
 
 /**
@@ -7,5 +9,5 @@ import com.didiincubator.Beans.ApplyBean;
  */
 public interface IApplyModel {
     //向服务器提交订单
-    Boolean submit(ApplyBean applyBean);
+    int submit(ApplyBean applyBean, Handler handler);
 }
