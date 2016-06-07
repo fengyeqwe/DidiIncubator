@@ -17,6 +17,7 @@
             android:id="@+id/myapply_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
             android:src="@drawable/btn_back"/>
 
@@ -24,6 +25,7 @@
             android:id="@+id/myapply_phone"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/icon_phone"/>
@@ -86,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/colorBlack">
+        android:background="#a03da0de">
 
         <TextView
             android:layout_width="0dp"

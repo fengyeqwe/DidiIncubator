@@ -58,6 +58,7 @@
                     android:background="@drawable/edit_sousuo"
                     />
                 <Button
+                    android:background="#a0ffffff"
                     android:id="@+id/search_button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
