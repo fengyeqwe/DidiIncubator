@@ -49,6 +49,7 @@ import com.didiincubator.Adapter.AllAdapter;
 import com.didiincubator.Beans.DidiBean;
 import com.didiincubator.Beans.InMapInfo;
 import com.didiincubator.R;
+import com.didiincubator.View.ApplyListActivity;
 import com.didiincubator.View.DetailActivity;
 import com.didiincubator.View.HistoryActivity;
 import com.didiincubator.utils.HistoryHelper;
@@ -505,9 +506,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.item_apply:
                         //TODO 菜单选项
-                       //startActivity(new Intent(MainActivity.this,ApplyActivity.class));
-                        //toolbar.setTitle("我的申请");
-                        //finish();
+                       startActivity(new Intent(MainActivity.this, ApplyListActivity.class));
+                        toolbar.setTitle("我的申请");
+                       // finish();
                         break;
                     case R.id.item_collection:
                         startActivity(new Intent(MainActivity.this,CollectionActivity.class));

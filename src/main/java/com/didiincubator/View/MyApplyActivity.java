@@ -1,8 +1,10 @@
 package com.didiincubator.View;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +13,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.didiincubator.Presenter.MyApplyPresenter;
 import com.didiincubator.R;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,8 +37,6 @@ public class MyApplyActivity extends AppCompatActivity implements IMyApplyView {
     ImageView mMyapplyImg;
     @Bind(R.id.myapply_name)
     TextView mMyapplyName;
-    @Bind(R.id.myapply_price)
-    TextView mMyapplyPrice;
     @Bind(R.id.myapply_adress)
     TextView mMyapplyAdress;
     @Bind(R.id.myapply_state)
@@ -41,14 +44,22 @@ public class MyApplyActivity extends AppCompatActivity implements IMyApplyView {
     @Bind(R.id.myapply_extra)
     TextView mMyapplyExtra;
     private MyApplyPresenter mPresenter;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient mClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_apply);
         ButterKnife.bind(this);
-        mPresenter=new MyApplyPresenter(MyApplyActivity.this);
+        mPresenter = new MyApplyPresenter(MyApplyActivity.this);
         mPresenter.setUI();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        mClient = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @OnClick({R.id.myapply_back, R.id.myapply_phone})
@@ -58,6 +69,7 @@ public class MyApplyActivity extends AppCompatActivity implements IMyApplyView {
                 MyApplyActivity.this.finish();
                 break;
             case R.id.myapply_phone:
+                mPresenter.phone();
                 break;
         }
     }
@@ -87,18 +99,31 @@ public class MyApplyActivity extends AppCompatActivity implements IMyApplyView {
 
     @Override
     public void setState(String state) {
-mMyapplyState.setText(state);
+        mMyapplyState.setText(state);
     }
 
     @Override
     public void setExtra(String extra) {
-mMyapplyExtra.setText(extra);
+        mMyapplyExtra.setText(extra);
     }
 
     @Override
     public int getId() {
-        Intent intent=getIntent();
+        Intent intent = getIntent();
         int id = intent.getIntExtra("apply_id", 0);
+        Log.e("myapply",id+"");
         return id;
     }
+
+    @Override
+    public void phone(String phonenumber) {
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.CALL");
+        intent.setData(Uri.parse("tel:" + phonenumber));
+        startActivity(intent);
+    }
+
+
+
+
 }

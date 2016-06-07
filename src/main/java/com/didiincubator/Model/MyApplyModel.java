@@ -4,6 +4,7 @@ import android.database.CursorJoiner;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.didiincubator.Beans.ApplyBean;
 import com.didiincubator.Beans.ApplyResultBean;
@@ -102,7 +103,7 @@ public class MyApplyModel implements IMyApplyModel{
                 Message msg=new Message();
                 DidiBean didi = list.get(0);
                 Bundle bundle=new Bundle();
-                bundle.putSerializable("applyBean",didi);
+                bundle.putSerializable("didi",didi);
                 msg.setData(bundle);
                 msg.what=MSG_2;
                 handler.sendMessage(msg);
@@ -146,6 +147,7 @@ public class MyApplyModel implements IMyApplyModel{
                 }.getType());
                 Message msg=new Message();
                 ApplyResultBean applyResultBean = list.get(0);
+                Log.e("myapply",applyResultBean.getState());
                 Bundle bundle=new Bundle();
                 bundle.putSerializable("applyResult",applyResultBean);
                 msg.setData(bundle);

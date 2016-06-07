@@ -52,16 +52,7 @@
             android:src="@drawable/d2"
             />
 
-        <TextView
-            android:id="@+id/myapply_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
-            android:text="无界空间"
-            android:textColor="@color/colorWhite"
-            android:textSize="40px"/>
-
+        <!--
         <TextView
             android:id="@+id/myapply_price"
             android:layout_width="wrap_content"
@@ -69,6 +60,14 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="90dp"
             android:text="1800元/月"
+            android:textColor="@color/colorWhite"
+            android:textSize="40px"/>-->
+        <TextView
+            android:id="@+id/myapply_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="140dp"
             android:textColor="@color/colorWhite"
             android:textSize="40px"/>
 
@@ -78,11 +77,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="150dp"
-            android:text="朝阳望京南"
             android:textColor="@color/colorWhite"
-            android:textSize="40px"/>
-
-
+            android:textSize="40px"
+            android:layout_gravity="left|bottom"/>
     </FrameLayout>
 
     <LinearLayout
@@ -106,7 +103,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="未受理"
+
             android:textColor="@color/colorWhite"
             android:textSize="40px"/>
     </LinearLayout>

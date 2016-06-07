@@ -19,5 +19,7 @@ public interface IMyApplyView {
     void setExtra(String extra);
     //申请的id
     int getId();
+ //联系电话
+ void phone(String phonenumber);
 
 }

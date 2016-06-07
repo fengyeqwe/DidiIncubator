@@ -160,7 +160,7 @@ public class DetailActivity extends AppCompatActivity {
         //设置点击消息的跳转URL
         qzone.setTargetUrl("你的URL链接");
         //设置分享内容的标题
-        qzone.setTitle("QZone title");
+        qzone.setTitle("http://ddfuhuaqi.com");
         //设置分享图片
         qzone.setShareImage(new UMImage(this, R.drawable.app));
         mController.setShareMedia(qzone);
@@ -177,7 +177,7 @@ public class DetailActivity extends AppCompatActivity {
         qqShareContent.setShareImage(new UMImage(this, R.drawable.app));
         qqShareContent.isMultiMedia();
         //设置点击分享内容的跳转链接
-        qqShareContent.setTargetUrl("你的URL链接");
+        qqShareContent.setTargetUrl("http://ddfuhuaqi.com");
         mController.setShareMedia(qqShareContent);
 
         mController.setShareContent(didi.getSketch());
