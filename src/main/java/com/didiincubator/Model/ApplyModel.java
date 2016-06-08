@@ -29,6 +29,7 @@ public class ApplyModel implements IApplyModel {
         String applyBeanJson = gson.toJson(applyBean);
         String url= MYHTTP +"applyServlet";
         Request<String> request= NoHttp.createStringRequest(url);
+        request.setHeader("Content-Type", "application/json;charset=utf-8");
         request.add("method","add" );
         request.add("Json",applyBeanJson);
 

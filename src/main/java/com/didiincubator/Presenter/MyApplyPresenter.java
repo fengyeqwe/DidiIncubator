@@ -19,6 +19,8 @@ public class MyApplyPresenter {
     public static final int MSG_3 = 0X3;
     IMyApplyModel mMyApplyModel;
     IMyApplyView mMyApplyView;
+    private DidiBean didi;
+
     public MyApplyPresenter(IMyApplyView view){
         mMyApplyModel=new MyApplyModel();
         mMyApplyView=view;
@@ -38,7 +40,7 @@ public class MyApplyPresenter {
                         public void handleMessage(Message msg) {
                             super.handleMessage(msg);
                             if (msg.what== MSG_2){
-                                DidiBean   didi= (DidiBean) msg.getData().getSerializable("applyBean");
+                                  didi= (DidiBean) msg.getData().getSerializable("didi");
                                 mMyApplyView.setImage(didi.getHeadPortrait());
                                 mMyApplyView.setName(didi.getName());
                                 // mMyApplyView.setPrice(didi.get);
@@ -53,23 +55,22 @@ public class MyApplyPresenter {
        mMyApplyModel.getApply(mMyApplyView.getId(),handler1);
 
         final Handler handler2=new Handler(){
-
-
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if (msg.what== MSG_3){
                     ApplyResultBean applyResultBean = (ApplyResultBean) msg.getData().getSerializable("applyResult");
                     mMyApplyView.setState(applyResultBean.getState()+"");
-                    mMyApplyView.setExtra(applyResultBean.getExtra()+"");
+                  // if (applyResultBean.getExtra().length()!=0) {
+                        mMyApplyView.setExtra(applyResultBean.getExtra() + "");
+                   // }
                 }
             }
         };
-        ApplyResultBean applyResultBean = mMyApplyModel.getApplyResult(mMyApplyView.getId(),handler2);
-
-       // DidiBean didi = mMyApplyModel.getDidi(applyBean.getDidi_id());
-
-
+        mMyApplyModel.getApplyResult(mMyApplyView.getId(),handler2);
+    }
+    public void phone(){
+        mMyApplyView.phone(didi.getPhonenumber());
     }
 
 }

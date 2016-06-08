@@ -58,6 +58,7 @@
                     android:background="@drawable/edit_sousuo"
                     />
                 <Button
+                    android:background="#a0ffffff"
                     android:id="@+id/search_button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -67,14 +68,6 @@
             </LinearLayout>
 
             <include layout="@layout/egg_listview"></include>
-
-            <Button
-                android:id="@+id/routLine"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="驾车路线"
-                android:visibility="gone"
-                android:layout_gravity="right|bottom" />
         </FrameLayout>
     </LinearLayout>
     <android.support.design.widget.NavigationView

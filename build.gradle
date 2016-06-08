@@ -98,6 +98,7 @@ dependencies {
 
 dependencies {
     compile project(':IMKit')
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }
 
 

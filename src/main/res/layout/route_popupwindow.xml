@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#21282D"
+    >
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="请选择抵达方式"
+    android:textColor="#ffffff"
+    android:textSize="15sp"
+    />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/drive_route"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="驾车路线"
+            />
+        <Button
+            android:id="@+id/walk_route"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="步行路线"
+            />
+        <Button
+            android:id="@+id/bike_route"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="骑行路线"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

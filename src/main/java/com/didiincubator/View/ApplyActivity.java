@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.didiincubator.Beans.DidiBean;
 import com.didiincubator.Presenter.ApplyPresenter;
@@ -21,9 +23,9 @@ import butterknife.OnClick;
 
 public class ApplyActivity extends AppCompatActivity implements IApplyView {
 
-    @Bind(R.id.details_btn_back)
+    @Bind(R.id.apply_back)
     ImageView mDetailsBtnBack;
-    @Bind(R.id.details_text_title)
+    @Bind(R.id.apply_title)
     TextView mDetailsTextTitle;
     @Bind(R.id.apply_name)
     EditText mApplyName;
@@ -55,7 +57,7 @@ public class ApplyActivity extends AppCompatActivity implements IApplyView {
         didi = (DidiBean) getIntent().getSerializableExtra("didi");
     }
 
-    @OnClick({R.id.details_btn_back, R.id.apply_submit})
+    @OnClick({R.id.apply_back, R.id.apply_submit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.details_btn_back:
@@ -93,7 +95,13 @@ public class ApplyActivity extends AppCompatActivity implements IApplyView {
             }
 
         };
-        applyPresenter.submit(handler);
+        if (mApplyName.getText().length()==0||mApplyPhone.getText().length()==0||
+                mApplyNum.getText().length()==0||mApplyTime.getText().length()==0||
+                mApplyLooktime.getText().length()==0){
+            String remind="请信息填写完整后提交";
+            Toast.makeText(ApplyActivity.this,remind,Toast.LENGTH_SHORT).show();}else{
+            applyPresenter.submit(handler);
+        }
 
 
     }

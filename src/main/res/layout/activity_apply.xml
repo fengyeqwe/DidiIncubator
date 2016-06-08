@@ -15,7 +15,7 @@
         android:background="#8FD3FD"
         >
         <ImageView
-            android:id="@+id/about_back"
+            android:id="@+id/apply_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
@@ -23,10 +23,9 @@
             android:src="@drawable/icon_back"
             />
         <TextView
-            android:id="@+id/history_text"
+            android:id="@+id/apply_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_centerInParent="true"
             android:text="申请"
             android:textSize="20sp"
@@ -57,7 +56,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="7"
-            android:hint="@string/appler_hint"/>
+            android:hint="@string/appler_hint"
+            android:imeOptions="actionNext"
+            android:singleLine="true"/>
     </LinearLayout>
 
     <LinearLayout
@@ -71,13 +72,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:text="联系电话     :"/>
+            android:text="联系电话     :"
+            />
         <EditText
             android:id="@+id/apply_phone"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="7"
-            android:hint="请输入联系方式"/>
+            android:hint="请输入联系方式(必填)"
+            android:imeOptions="actionNext"
+            android:phoneNumber="true"/>
     </LinearLayout>
 
     <LinearLayout
@@ -96,7 +100,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="7"
-            android:hint=""/>
+            android:hint="请输入入住的人数(必填)"
+            android:imeOptions="actionNext"
+            android:numeric="integer"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -114,7 +120,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="7"
-            android:hint=""/>
+            android:hint="入驻时长，按月计(必填)"
+            android:imeOptions="actionNext"
+            android:numeric="integer"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -132,7 +140,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="7"
-            android:hint=""/>
+            android:imeOptions="actionNext"
+            android:hint="请填写看房时段(必填)"
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -150,6 +160,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="7"
+            android:ellipsize="end"
+            android:imeOptions="actionNext"
             android:hint=""/>
     </LinearLayout>
 

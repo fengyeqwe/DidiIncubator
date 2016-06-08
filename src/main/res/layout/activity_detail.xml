@@ -36,7 +36,6 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="无界空间"
             android:textColor="@color/colorWhite"
             android:textSize="20sp"/>
     </RelativeLayout>
@@ -72,7 +71,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="朝阳-CBD"
                     android:textColor="@color/colorWhite"/>
 
                 <TextView
@@ -81,9 +79,17 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="5元/天/平方米"
+                    android:text="0元/天/平方米"
                     android:textColor="@color/colorWhite"/>
             </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="简介"
+                android:layout_margin="10.0dip"
+                android:textColor="#ff73aec0"
+                android:textSize="20.0sp"/>
+
 
             <TextView
                 android:id="@+id/detail_sketch"

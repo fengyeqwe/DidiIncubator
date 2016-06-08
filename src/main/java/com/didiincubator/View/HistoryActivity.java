@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity implements ExpandableListView.OnGroupClickListener {
+    public static final String MYHTTP = "http://10.201.1.46:8080/Didiweb/";
     private static final int NOHTTP_WHAT = 1;
     ImageView imageHistory;
     PullToRefreshExpandableListView historyListView;
@@ -152,7 +153,7 @@ public class HistoryActivity extends AppCompatActivity implements ExpandableList
     //网络请求获取didi,what表示日期
     private DidiBean getDidi(int didi_id, int what) {
         DidiBean didi = new DidiBean();
-        String url = "http://10.201.1.152:8080/Didiweb/DidiServlet";
+        String url = MYHTTP+"DidiServlet";
         Request<JSONArray> request = NoHttp.createJsonArrayRequest(url);
         request.add("method", "select");
         request.add("id", didi_id);
