@@ -43,7 +43,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="QSVjf7HZ30K86EXac0Iv2NDwGXwEN1kB"/>
+            android:value="ardzoEhWqvU4FC3DED6pskYIZosERFPm"/>
 
         <service
             android:name="com.baidu.location.f"
@@ -140,6 +140,8 @@
             android:value="@integer/google_play_services_version"/>
 
         <activity android:name=".View.ApplyListActivity">
+        </activity>
+        <activity android:name=".View.DetailmapActivity">
         </activity>
     </application>
 

@@ -10,7 +10,7 @@ public class ApplyResultBean implements Serializable{
     private int id;//以申请表主键为外键
     private String state;//申请状态
     private String result;//申请结果
-    private String extra;//特殊说明
+    private String extra="";//特殊说明
 
     public ApplyResultBean() {
     }

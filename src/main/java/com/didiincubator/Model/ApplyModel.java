@@ -12,6 +12,8 @@ import com.yolanda.nohttp.Request;
 import com.yolanda.nohttp.RequestQueue;
 import com.yolanda.nohttp.Response;
 
+import org.apache.http.protocol.HTTP;
+
 /**
  * Created by 枫叶1 on 2016/6/2.
  */
@@ -29,7 +31,8 @@ public class ApplyModel implements IApplyModel {
         String applyBeanJson = gson.toJson(applyBean);
         String url= MYHTTP +"applyServlet";
         Request<String> request= NoHttp.createStringRequest(url);
-        request.setHeader("Content-Type", "application/json;charset=utf-8");
+        request.setHeader("Content-Type", "text/html");
+        request.setHeader("charset", HTTP.UTF_8);
         request.add("method","add" );
         request.add("Json",applyBeanJson);
 

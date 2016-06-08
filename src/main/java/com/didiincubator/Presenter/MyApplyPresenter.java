@@ -61,9 +61,9 @@ public class MyApplyPresenter {
                 if (msg.what== MSG_3){
                     ApplyResultBean applyResultBean = (ApplyResultBean) msg.getData().getSerializable("applyResult");
                     mMyApplyView.setState(applyResultBean.getState()+"");
-                  // if (applyResultBean.getExtra().length()!=0) {
+                   if (!applyResultBean.getExtra().isEmpty()) {
                         mMyApplyView.setExtra(applyResultBean.getExtra() + "");
-                   // }
+                    }
                 }
             }
         };

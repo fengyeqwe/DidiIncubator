@@ -1,5 +1,6 @@
 package com.didiincubator.View;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -99,7 +101,15 @@ public class ApplyListActivity extends AppCompatActivity implements IApplyListVi
                 new ApplyListTask().execute();
             }
         });
-
+        //单击item跳转
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(ApplyListActivity.this,MyApplyActivity.class);
+                intent.putExtra("apply_id",mList.get(position-1).getApply().getId());//position从1开始，需使用（position-1）
+                startActivity(intent);
+            }
+        });
     }
 
 

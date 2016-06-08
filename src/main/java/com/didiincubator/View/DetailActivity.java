@@ -403,8 +403,15 @@ public class DetailActivity extends AppCompatActivity {
                 break;
             case R.id.details_btn_collection:
 
+
                 break;
             case R.id.tv_traffic_metro:
+                //测试地图
+                Intent intent =new Intent(DetailActivity.this,DetailmapActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("didi",didi);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
             case R.id.tv_traffic_airplane:
                 break;
