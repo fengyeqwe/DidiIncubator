@@ -25,7 +25,7 @@ public class ExceptionUtils {
             }
         }else if (exception instanceof ServerError){//服务器错误
             if (responseCode==500){
-                Toast.makeText(context, "服务器遇到不可预知的情况", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "服务器遇到不可预知的情况....", Toast.LENGTH_SHORT).show();
             }else if (responseCode==504){
                 Toast.makeText(context, "网关超时", Toast.LENGTH_SHORT).show();
             }else{

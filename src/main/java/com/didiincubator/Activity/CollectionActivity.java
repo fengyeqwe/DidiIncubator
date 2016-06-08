@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.didiincubator.Adapter.CollectionAdapter;
 import com.didiincubator.Beans.Collection;
@@ -109,9 +110,10 @@ public class CollectionActivity extends AppCompatActivity {
                     try {
                         JSONObject object=result.getJSONObject(i);
                         collection.setDidi_id(object.getInt("didi_id"));
-                        int id=collection.getDidi_id();
+                        //int id=collection.getDidi_id();
+                        int  id=collection.getDidi_id();
                         incubatorID.add(id);
-                        //Toast.makeText(CollectionActivity.this, "didi_id:"+incubatorID.toString(), Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(CollectionActivity.this, "didi_id:"+incubatorID.toString(), Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -133,12 +135,12 @@ public class CollectionActivity extends AppCompatActivity {
      }
     //解析得到收藏的孵化器的信息
     private void doGet(List<Integer> lists) {
-           // Toast.makeText(this, "lists"+lists, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "lists"+lists, Toast.LENGTH_SHORT).show();
             int ids=0;
             for (int i=0;i<lists.size();i++) {
                 //ids = lists.get(i);
                 // }
-                String method = "select";
+                String method = "selectID";
                 int id = lists.get(i);
             String url = "http://115.28.78.82:8080/Didiweb/DidiServlet";
                 final Request<JSONArray> request = NoHttp.createJsonArrayRequest(url, RequestMethod.GET);

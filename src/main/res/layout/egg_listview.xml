@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#808080"
+        android:background="#CBC8C8"
         android:text="孵化器"
         android:textColor="#ffffff"
         android:textSize="20sp"
@@ -22,7 +22,7 @@
         android:layout_height="match_parent"
         ptr:ptrDrawable="@drawable/default_ptr_flip"
         ptr:ptrAnimationStyle="flip"
-        android:background="#E8E6E6"
+        android:background="#CBC8C8"
         >
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
 

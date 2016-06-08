@@ -62,7 +62,8 @@ public class AllAdapter extends BaseAdapter{
             viewHolder= (ViewHolder) convertView.getTag();
         }
         DidiBean incubator=list.get(position);
-        viewHolder.all_name.setText("名称是："+incubator.getName());
+        viewHolder.all_name.setText("名字："+incubator.getName());
+        viewHolder.all_sketch.setText("简述："+incubator.getSketch());
         //viewHolder.textView2.setText(incubator.getSketch());
         //viewHolder.textView3.setText(incubator.getType_didi());
         Glide.with(context).load(incubator.getHeadPortrait()).centerCrop().crossFade()
@@ -71,15 +72,12 @@ public class AllAdapter extends BaseAdapter{
         return convertView;
     }
     public class ViewHolder{
-        TextView all_name,all_dayPrice,all_price,all_area,all_gongWei;
+        TextView all_name,all_sketch;
         ImageView all_picture;
         CheckBox all_collection;
         public ViewHolder(View view){
             all_name= (TextView) view.findViewById(R.id.all_name);
-            all_dayPrice= (TextView) view.findViewById(R.id.all_dayPrice);
-            all_price= (TextView) view.findViewById(R.id.all_price);
-            all_area= (TextView) view.findViewById(R.id.all_area);
-            all_gongWei= (TextView) view.findViewById(R.id.all_gongWei);
+            all_sketch= (TextView) view.findViewById(R.id.all_sketch);
             all_picture= (ImageView) view.findViewById(R.id.all_picture);
             all_collection= (CheckBox) view.findViewById(R.id.all_collection);
         }
@@ -93,13 +91,13 @@ public class AllAdapter extends BaseAdapter{
                     if (isChecked){
                         //说明用户选中了第position行
                         CollectionAdd collectionAdd=new CollectionAdd();
-                        Toast.makeText(context, "收藏了："+id, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "收藏了："+id, Toast.LENGTH_SHORT).show();
                         incubator.setChecked(true);
                         collectionAdd.addIncubator(id);
                     }else {
                         //说明用户取消了第position
                         CollectionCancle collectionCancle=new CollectionCancle();
-                        Toast.makeText(context, "取消收藏了："+id, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "取消收藏了："+id, Toast.LENGTH_SHORT).show();
                         incubator.setChecked(false);
                         collectionCancle.cancleIncubator(id);
                     }

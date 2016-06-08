@@ -19,14 +19,6 @@
             android:text="名称"
             android:textSize="15sp"
             />
-        <TextView
-            android:id="@+id/all_dayPrice"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:text="5元/天/m²"
-            android:textSize="15sp"
-            />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -40,34 +32,11 @@
             android:layout_weight="4"
             android:layout_height="wrap_content"
           />
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="match_parent"
-            android:weightSum="3">
-            <TextView
-                android:id="@+id/all_price"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="5916元/月"
-                />
-            <TextView
-                android:id="@+id/all_area"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="100m²"
-                />
-            <TextView
-                android:id="@+id/all_gongWei"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="3-5个工位"
-                />
-        </LinearLayout>
+       <TextView
+           android:id="@+id/all_sketch"
+           android:layout_width="0dp"
+           android:layout_weight="3"
+           android:layout_height="wrap_content" />
     <CheckBox
         android:id="@+id/all_collection"
         android:layout_width="0dp"

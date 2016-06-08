@@ -42,13 +42,36 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.Overlay;
 import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.PolygonOptions;
+import com.baidu.mapapi.map.Polyline;
+import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.overlayutil.DrivingRouteOverlay;
+import com.baidu.mapapi.overlayutil.OverlayManager;
+import com.baidu.mapapi.search.busline.BusLineResult;
+import com.baidu.mapapi.search.busline.BusLineSearch;
+import com.baidu.mapapi.search.core.RouteLine;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.poi.PoiCitySearchOption;
+import com.baidu.mapapi.search.poi.PoiSearch;
+import com.baidu.mapapi.search.route.BikingRouteResult;
+import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
+import com.baidu.mapapi.search.route.DrivingRouteResult;
+import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
+import com.baidu.mapapi.search.route.PlanNode;
+import com.baidu.mapapi.search.route.RoutePlanSearch;
+import com.baidu.mapapi.search.route.TransitRouteResult;
+import com.baidu.mapapi.search.route.WalkingRouteResult;
+import com.baidu.mapapi.utils.route.BaiduMapRoutePlan;
+import com.baidu.mapapi.utils.route.RouteParaOption;
 import com.bumptech.glide.Glide;
 import com.didiincubator.Adapter.AllAdapter;
 import com.didiincubator.Beans.DidiBean;
 import com.didiincubator.Beans.InMapInfo;
 import com.didiincubator.R;
+import com.didiincubator.View.ApplyActivity;
 import com.didiincubator.View.DetailActivity;
 import com.didiincubator.View.HistoryActivity;
 import com.didiincubator.utils.HistoryHelper;
@@ -84,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     LocationClient locationClient;//LocationClient类是定位SDK的核心类
     MyLocation myLocation;
     boolean isFirstIn=true;//判断是否第一次定位，默认为第一次
-    double myLatitude;//经纬度
+    double myLatitude;//我的位置经纬度
     double myLongitude;
     float mCurrentX;//角度值
     MyLocationConfiguration.LocationMode mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
@@ -94,11 +117,11 @@ public class MainActivity extends AppCompatActivity {
 
     //标注物
     BitmapDescriptor labelDescriptor=null;//标注物图标
-    Marker marker;
-    List<DidiBean> list;
-    DidiBean incubator;
-    ImageView imageView;
-    TextView tv_name,tv_type,tv_sketch,tv_number,tv_distance;
+    Marker marker;//百度标注物
+    List<DidiBean> list;//孵化器集合
+    DidiBean incubator;//孵化器实体类
+    ImageView imageView;//弹框显示的图片
+    TextView tv_name,tv_type,tv_sketch;
     //标志物解析数据
     RequestQueue queue=NoHttp.newRequestQueue();;
     //static  final int NOHTTP_MARKER=0x001;
@@ -119,26 +142,35 @@ public class MainActivity extends AppCompatActivity {
 
     //点击蛋显示孵化器列表
     ImageView eggImageView;
-    //TODO 点击蛋显示的布局
+    // 点击蛋显示的布局
     LinearLayout linearLayout;
-    PullToRefreshListView pullToRefreshListView;
+    PullToRefreshListView pullToRefreshListView;//刷新
     AllAdapter adapter;
-    //搜索
-    EditText searchEditText;
-    Button searchButton;
 
+    //搜索
+    EditText searchEditText;//编辑文本搜索框
+    Button searchButton;//搜索按钮
+    List<String> names=new ArrayList<>();//孵化器名字集合
+    double incubatorLatitude;//搜索的孵化器的纬度
+    double incubatorLongtitude;//搜索到的孵化器的经度
+    String incubatorName;
     //声明数据库操作类
     SQLiteDatabase mDataBase;
     //声明数据库辅助类对象
     HistoryHelper mHistoryHelper;
     private Bundle bundle;
     //个人信息
-   View view;
+   View view;//得到 navigationView中的头部控件
+    //TODO 交通路线测试
+    RouteLine routeLine=null;//路线
+    RoutePlanSearch search=null;//路线搜索
+    OverlayManager routeOverlay=null;
+    Button driveLine;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //在使用SDK各组件之前初始化context信息，传入ApplicationContext
+        //在使用SDK各组件之前e初始化context信息，传入ApplicationContext
         //注意该方法要再setContentView方法之前实现
         //去除actionbar
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -146,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         list=new ArrayList<>();//（孵化器）标志物集合
         initMarkerData();//初始化
-        this.context=this;
+        this.context=getApplicationContext();
         mapView= (MapView) findViewById(R.id.didi_mapView);
         initView();//初始化视图
         //初始化左侧滑中的控件
@@ -168,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
         //initOverlay(list);
         // 延迟2秒
         handler.sendMessageDelayed(handler.obtainMessage(1),2000);
+
         adapter=new AllAdapter(list,context);
         pullToRefreshListView.setAdapter(adapter);
         initNavigation();
@@ -175,7 +208,9 @@ public class MainActivity extends AppCompatActivity {
         initMarkerListener();//标注物监听事件
         initEggListener();//监听主界面蛋的点击事件，显示附近孵化器列表
         userMessage();
-        editListener();//监听搜索事件
+        searchButtonListener();//监听搜索事件
+        setSearchEditTextListener();
+        routeLineListener();
     }
 
 
@@ -198,9 +233,11 @@ public class MainActivity extends AppCompatActivity {
         //搜索
         searchEditText= (EditText) findViewById(R.id.suosou);
         searchButton= (Button) findViewById(R.id.search_button);
-
+        search=RoutePlanSearch.newInstance();//初始化路线查询对象
+        driveLine= (Button) findViewById(R.id.routLine);
         //初始化historyHelper
         mHistoryHelper=new HistoryHelper(MainActivity.this);
+
 
 
 
@@ -209,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
     //解析标注物
     private void initMarkerData() {
         String method = "selectall";
-        String name = "";
+        final String name = "";
         String url = "http://115.28.78.82:8080/Didiweb/DidiServlet";
         final Request<JSONArray> request = NoHttp.createJsonArrayRequest(url, RequestMethod.GET);
         request.add("method", method);
@@ -237,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
                         incubator.setCoordinateY((float) object.getDouble("coordinateY"));
                         incubator.setHeadPortrait(object.getString("headPortrait"));
                         list.add(incubator);
+                        names.add(incubator.getName());
                         adapter.notifyDataSetChanged();
                         //Toast.makeText(context, "为什么"+list.size(), Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
@@ -274,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
             bundle.putSerializable("info",info);
             marker.setExtraInfo(bundle);
         }
-        //TODO 把地图移动最后一个位置，方便显示所有位置
+        // 把地图移动最后一个位置，方便显示所有位置
         MapStatusUpdate msc=MapStatusUpdateFactory.newLatLng(latLng);
         baiduMap.setMapStatus(msc);
     }
@@ -422,7 +460,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMarkerClick(Marker marker) {
                 bundle = marker.getExtraInfo();
                 DidiBean info = (DidiBean) bundle.getSerializable("info");
-                Glide.with(MainActivity.this).load(info.getHeadPortrait()).centerCrop().crossFade()
+                Glide.with(context).load(info.getHeadPortrait()).centerCrop().crossFade()
                         .into(imageView);
                 // imageView.setImageResource(info.getImageId());
 
@@ -437,6 +475,7 @@ public class MainActivity extends AppCompatActivity {
                 TextView textView = new TextView(context);
                 textView.setBackgroundResource(R.drawable.popup);
                 textView.setPadding(30, 20, 30, 50);
+                textView.setTextColor(Color.GRAY);
                 textView.setText(info.getName());
                 final LatLng latLng = marker.getPosition();
                 Point point = baiduMap.getProjection().toScreenLocation(latLng);
@@ -457,6 +496,7 @@ public class MainActivity extends AppCompatActivity {
                 if (event == MotionEvent.ACTION_DOWN) {
                     relativeLayout.setVisibility(View.GONE);//当点击屏幕的时候布局消失
                     eggImageView.setVisibility(View.VISIBLE);//蛋显示
+                    searchEditText.setFocusable(false);//点击屏幕其他地方搜索失去焦点
                 }
             }
         });
@@ -505,7 +545,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.item_apply:
                         //TODO 菜单选项
-                       //startActivity(new Intent(MainActivity.this,ApplyActivity.class));
+                    //startActivity(new Intent(MainActivity.this,ApplyActivity.class));
                         //toolbar.setTitle("我的申请");
                         //finish();
                         break;
@@ -530,14 +570,13 @@ public class MainActivity extends AppCompatActivity {
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent=new Intent(MainActivity.this, DetailActivity.class);
                 DidiBean info = (DidiBean) bundle.getSerializable("info");
                 int id=info.getId();
-
                 intent.putExtra("id",id+"");
                 startActivity(intent);
                 addhistory(id);//点击孵化器时，向sqlite添加历史记录
+                relativeLayout.setVisibility(View.GONE);
             }
 
             private void addhistory(int id) {
@@ -558,7 +597,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-        // TODO 蛋的点击事件
+        //蛋的点击事件
     private void initEggListener() {
         eggImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -570,7 +609,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    //修改个人信息
+    //TODO 修改个人信息 bundle把值传过来
     public void userMessage(){
       view.setOnClickListener(new View.OnClickListener() {
           @Override
@@ -581,21 +620,158 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //TODO 搜索事件
-    public void editListener(){
-       searchButton.setOnClickListener(new View.OnClickListener() {
+    public void searchButtonListener(){
+       searchButton.setOnClickListener(new View.OnClickListener(){
            @Override
-           public void onClick(View v) {
-               String incubatorName=searchEditText.getText().toString().trim();
-               getSearchIncubator(incubatorName);
-               /*Bundle bundle=new Bundle();
-               bundle.putString("name",incubatorName);*/
-               //Toast.makeText(context, "名字"+incubatorName, Toast.LENGTH_SHORT).show();
-           }
+           public void onClick(View v){
+                    incubatorName = searchEditText.getText().toString().trim();
+                   getSearchIncubator(incubatorName);
+                   isIncubatorExit(incubatorName);
+                   searchEditText.setFocusable(false);//点击搜索时失去焦点
+                   driveLine.setVisibility(View.VISIBLE);
+                   searchButtonProcess();
+                  // searchEditText.clearFocus();
+               }
        });
     }
+    //监听文本框
+    public void setSearchEditTextListener(){
+      //EDITTEXT如果已经失去焦点，使用setOnClickListener()再想获取焦点，并且能够编辑，则需要点击两次才能够进行编辑，
+        // 而使用setOnTouchListener进行监听只需点击一次就能够进行编辑
+        searchEditText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                searchEditText.setFocusable(true);
+                searchEditText.setFocusableInTouchMode(true);
+                searchEditText.requestFocus();
+                searchEditText.requestFocusFromTouch();
+                return false;
+            }
+        });
+    }
+    //判断是否存在这个孵化器
+    public boolean isIncubatorExit(String incubatorName) {
+        if (names.contains(incubatorName)){
+            return true;
+        }else {
+            Toast.makeText(context, "没有这个孵化器，请重新输入", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
     //通过得到的名字来进行查询
-    public void getSearchIncubator(String name){
-        Toast.makeText(context, "mingzi:"+name, Toast.LENGTH_SHORT).show();
+    public void getSearchIncubator(final String incubatorName){
+            final DidiBean incubator1=new DidiBean();
+            String method="select";
+            String url="http://115.28.78.82:8080/Didiweb/DidiServlet";
+            Request<JSONObject> request=NoHttp.createJsonObjectRequest(url,RequestMethod.GET);
+            request.add("method",method);
+            request.add("name",incubatorName);
+            //Toast.makeText(context, "mingzi:"+incubatorName, Toast.LENGTH_SHORT).show();
+            queue.add(NOHTTP_MARK, request, new OnResponseListener<JSONObject>() {
+                @Override
+                public void onStart(int what) {
+
+                }
+                @Override
+                public void onSucceed(int what, Response<JSONObject> response) {
+                    JSONObject object=response.get();
+                    //incubator=new DidiBean();
+                    try {
+                        incubator1.setCoordinateX((float) object.getDouble("coordinateX"));
+                        incubator1.setCoordinateY((float) object.getDouble("coordinateY"));
+                        incubatorLatitude=incubator1.getCoordinateY();
+                        incubatorLongtitude=incubator1.getCoordinateX();
+                    } catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+
+                }
+                @Override
+                public void onFinish(int what) {
+
+                }
+            });
+        }
+    //TODO 路线查询监听
+    //监听驾车路线按钮
+    public void searchButtonProcess() {
+
+                    if(routeLine!=null){
+                        routeLine=null;
+                    }
+                    if (routeOverlay!=null){
+                        routeOverlay.removeFromMap();
+                    }
+            driveLine.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Toast.makeText(context,incubatorLatitude+"---"+incubatorLongtitude,Toast.LENGTH_LONG).show();
+                    routeLine=null;
+                   // baiduMap.clear();
+                    // baiduMap.clear();
+                    final PlanNode start=PlanNode.withLocation(new LatLng(myLatitude,myLongitude));
+                    final PlanNode end=PlanNode.withLocation(new LatLng(incubatorLatitude,incubatorLongtitude));
+                    if (v.getId()==R.id.routLine){
+                        search.drivingSearch((new DrivingRoutePlanOption()).from(start).to(end));
+                    }
+                    driveLine.setVisibility(View.GONE);
+                }
+            });
     }
 
+
+    public  void routeLineListener(){
+        search.setOnGetRoutePlanResultListener(new OnGetRoutePlanResultListener() {
+            @Override
+            public void onGetWalkingRouteResult(WalkingRouteResult walkingRouteResult) {
+
+            }
+
+            @Override
+            public void onGetTransitRouteResult(TransitRouteResult transitRouteResult) {
+
+            }
+
+            @Override
+            public void onGetDrivingRouteResult(DrivingRouteResult drivingRouteResult) {
+                    if (drivingRouteResult==null||drivingRouteResult.error!= SearchResult.ERRORNO.NO_ERROR){
+                        Toast.makeText(context, "抱歉未找到结果", Toast.LENGTH_SHORT).show();
+                    }
+                    if (drivingRouteResult.error==SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR){
+                        return;
+                    }
+                if (drivingRouteResult.error==SearchResult.ERRORNO.NO_ERROR){
+                    routeLine=drivingRouteResult.getRouteLines().get(0);
+                    DrivingRouteOverlay overlay=new MyDrivingRouteOverlay(baiduMap);
+                    routeOverlay=overlay;
+                    baiduMap.setOnMarkerClickListener(overlay);
+                    overlay.setData(drivingRouteResult.getRouteLines().get(0));
+                    overlay.addToMap();
+                    overlay.zoomToSpan();
+                }
+
+            }
+
+            @Override
+            public void onGetBikingRouteResult(BikingRouteResult bikingRouteResult) {
+
+            }
+        });
+    }
+    class MyDrivingRouteOverlay extends DrivingRouteOverlay{
+
+        /**
+         * 构造函数
+         *
+         * @param baiduMap 该DrivingRouteOvelray引用的 BaiduMap
+         */
+        public MyDrivingRouteOverlay(BaiduMap baiduMap) {
+            super(baiduMap);
+        }
+    }
 }
