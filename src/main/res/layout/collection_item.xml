@@ -3,38 +3,49 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/collection_picture"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/collection_name"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/collection_picture"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            />
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="名称"
-            />
-        <TextView
-            android:id="@+id/collection_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="价格"
-            />
-        <TextView
-            android:id="@+id/colletion_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="地址"
-            />
-    </LinearLayout>
-</RelativeLayout>
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/collection_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="名称"
+                android:textSize="18sp"
+                android:textColor="#fff"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/collection_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="价格"
+                android:textSize="18sp"
+                android:textColor="#fff"
+                />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/colletion_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="地址"
+                android:textSize="18sp"
+                android:textColor="#fff"
+                />
+        </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

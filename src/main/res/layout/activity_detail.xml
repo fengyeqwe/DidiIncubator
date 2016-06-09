@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/icon_applybackground"
     tools:context=".View.DetailActivity">
     <!--标题-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/colorTitle">
+        android:background="#a08fd3fd">
 
         <ImageView
             android:id="@+id/details_btn_back"
@@ -19,7 +20,7 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/btn_back"/>
+            android:src="@drawable/icon_back"/>
 
         <ImageView
             android:id="@+id/details_btn_collection"
@@ -36,7 +37,9 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:textColor="@color/colorWhite"
+            android:text="无界空间"
+            android:textColor="#fff"
+            android:textStyle="bold"
             android:textSize="20sp"/>
     </RelativeLayout>
 
@@ -63,7 +66,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@color/colorBlack"
+                android:background="#a0000000"
                 android:padding="10dp">
 
                 <TextView
@@ -71,7 +74,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textColor="@color/colorWhite"/>
+                    android:text="朝阳-CBD"
+                    android:textColor="#fff"/>
 
                 <TextView
                     android:id="@+id/details_text_price"
@@ -79,17 +83,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="0元/天/平方米"
-                    android:textColor="@color/colorWhite"/>
+                    android:text="5元/天/平方米"
+                    android:textColor="#fff"/>
             </RelativeLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="简介"
-                android:layout_margin="10.0dip"
-                android:textColor="#ff73aec0"
-                android:textSize="20.0sp"/>
-
 
             <TextView
                 android:id="@+id/detail_sketch"
@@ -688,31 +684,32 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
-            android:src="@mipmap/icon_phone"/>
+            android:src="@drawable/icon_phone"
+            android:layout_gravity="center"/>
 
         <ImageView
             android:id="@+id/details_message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
-            android:src="@mipmap/icon_letter"/>
+            android:src="@drawable/icon_chat"
+            android:layout_gravity="center"/>
 
         <ImageView
             android:id="@+id/details_share"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
-            android:src="@mipmap/icon_share"/>
+            android:src="@drawable/icon_share"
+            android:layout_gravity="center"/>
 
         <ImageView
             android:id="@+id/details_in"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@mipmap/icon_in"/>
+            android:src="@drawable/icon_apply"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 

@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+              android:background="@drawable/icon_applybackground"
     tools:context=".View.HistoryActivity">
     <RelativeLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#8FD3FD"
+        android:background="#a08FD3FD"
         >
         <ImageView
             android:id="@+id/history_back"
@@ -30,10 +31,10 @@
             android:textColor="#fff"/>
     </RelativeLayout>
 
-   <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
-       android:id="@+id/history_list"
-       android:layout_width="match_parent"
-       android:layout_height="0dp"
-       android:layout_weight="9">
-   </com.handmark.pulltorefresh.library.PullToRefreshExpandableListView>
+    <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
+        android:id="@+id/history_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9">
+    </com.handmark.pulltorefresh.library.PullToRefreshExpandableListView>
 </LinearLayout>

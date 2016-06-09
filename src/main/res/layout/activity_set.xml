@@ -7,13 +7,14 @@
     android:orientation="vertical"
     android:showDividers="middle|end"
     android:weightSum="10"
-    tools:context="com.didiincubator.incubator.SetActivity">
+              android:background="@drawable/icon_settingbackground"
+    tools:context=".Activity.SetActivity">
 
     <RelativeLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#8FD3FD">
+        android:background="#a08FD3FD">
 
         <ImageView
             android:id="@+id/set_back"
@@ -29,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="设置"
-            android:textColor="@color/colorWhite"
+            android:textColor="#fff"
             android:textSize="20sp"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -45,6 +46,7 @@
             android:layout_gravity="center"
             android:text="版本更新通知"
             android:textSize="20sp"
+            android:textColor="#a0000000"
             android:layout_marginLeft="20dp"/>
 
         <CheckBox
@@ -66,6 +68,7 @@
             android:layout_gravity="center"
             android:text="推送信息"
             android:textSize="20sp"
+            android:textColor="#a0000000"
             android:layout_marginLeft="20dp"/>
 
         <CheckBox
@@ -83,6 +86,7 @@
         android:layout_height="0dp"
         android:text="清除本地搜索记录"
         android:textSize="20sp"
+        android:textColor="#a0000000"
         android:gravity="center_vertical"
         android:layout_marginLeft="20dp"/>
 
@@ -93,6 +97,7 @@
         android:layout_height="0dp"
         android:text="清除缓存"
         android:textSize="20sp"
+        android:textColor="#a0000000"
         android:gravity="center_vertical"
         android:layout_marginLeft="20dp"/>
 
@@ -105,7 +110,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="20dp"
         android:text="退出当前账号"
-        android:textColor="@color/colorRed"
+        android:textColor="#e0ed2742"
         android:textSize="20dp"
 
         />

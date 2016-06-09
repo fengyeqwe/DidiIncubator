@@ -4,7 +4,20 @@
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
     <string name="incubator">无界空间</string>
-    <string name="applyer">申请人姓名      :</string>
+    <string name="applyer">申请人姓名      ：</string>
+    <string name="hsappler_hint">请输入真实姓名</string>
+    <string name="hsphone_hint">请输入联系方式</string>
+    <string name="hsapplyer">\t申请姓名\t\t\t:</string>
+    <string name="hsapplyertelephonenumber">\t联系电话\t\t\t:</string>
+    <string name="hsapplyernumber">\t入驻人数\t\t\t:</string>
+    <string name="hsapplyertime">\t入驻时间\t\t\t:</string>
+    <string name="hslooktime">\t看房时间\t\t\t:</string>
+    <string name="hspeoplenumber">请输入入驻人数</string>
+    <string name="hstime">请输入入驻时间</string>
+    <string name="hslookhousetime">请输入看房时间</string>
+    <string name="hsextre">\t特别说明\t\t\t:</string>
+    <string name="hswriterextre">请输入特别说明</string>
+    <string name="hsabout_text">\t\t\t滴滴孵化器是为创业者提供办公室租凭及配套服务的O2O平台。滴滴孵化器的价值观是简单，极致，快速，激情。我们通过pc端+移动端两大产品，链接业主，客户，以提升企业用户办公租凭体验和找房效率为原则，创造更好的创业办公租凭体验。</string>
     <string name="appler_hint">请输入真实姓名(必填)</string>
     <string name="pull_to_refresh_pull_label" translatable="false">向下拉动可以刷新</string>
     <string name="pull_to_refresh_release_label" translatable="false">松开可以刷新</string>
@@ -70,6 +83,8 @@
     <string name="umeng_socialize_send_btn_str">发送</string>
     <string name="umeng_socialize_img_des"/>
     <string name="umeng_socialize_share">分享</string>
+
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

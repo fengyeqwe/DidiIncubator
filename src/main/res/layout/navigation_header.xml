@@ -3,20 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="#a0646363"
+    android:background="#a0999999"
     >
 
         <ImageView
+            android:layout_weight="1"
             android:id="@+id/user_headicon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/app"/>
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/icon_head"
+            android:layout_gravity="center_vertical"/>
         <TextView
+            android:layout_weight="2"
             android:layout_marginLeft="30dp"
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="何晓"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:textColor="#fff"
             android:layout_gravity="center"
             />
 

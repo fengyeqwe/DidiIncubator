@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/icon_aboutbackground">
 
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
-        android:background="@android:drawable/edit_text"
         android:gravity="center_vertical"
-        android:hint="输入手机号"
-        android:textColorHint="#999"
-        android:textScaleX="1" />
+        android:hint="请输入手机号"
+        android:textColorHint="#666"
+        android:textSize="18sp"/>
 
     <EditText
         android:id="@+id/shuruyanzhengma"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/username"
-        android:background="@android:drawable/edit_text"
         android:gravity="center_vertical"
         android:hint="请输入验证码"
-        android:textColorHint="#999"
-        android:textScaleX="1" />
+        android:textColorHint="#666"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/shuruyanzhengma"
-        android:background="@android:drawable/edit_text"
         android:gravity="center_vertical"
-        android:hint="输入你的密码"
-        android:textColorHint="#999"
-        android:textScaleX="1" />
+        android:hint="请输入你的密码"
+        android:textColorHint="#666"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/huoquyanzhengma"
@@ -43,10 +41,11 @@
         android:layout_height="35dp"
         android:layout_marginLeft="200dp"
         android:layout_marginTop="96dp"
-        android:background="@android:color/transparent"
+        android:background="#a0ffffff"
         android:text="获取验证码"
-        android:textColor="#0649c4"
-        android:textSize="10sp" />
+        android:textColor="#a02b1c91"
+        android:textSize="12sp"
+        android:textStyle="bold"/>
 
     <Button
         android:id="@+id/zhuce"
@@ -55,7 +54,7 @@
         android:layout_below="@+id/password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:background="@drawable/shape"
+        android:background="@drawable/applybutton"
         android:text="注册"
         android:textColor="#FFF"
         android:textSize="18dp" />
@@ -67,7 +66,8 @@
         android:layout_below="@+id/zhuce"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="点击上面的按钮即表示您同意" />
+        android:text="点击上面的按钮即表示您同意"
+        android:textColor="#999"/>
 
     <Button
         android:id="@+id/fuwuxieyi"

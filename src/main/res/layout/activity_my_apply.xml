@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/icon_applybackground"
     tools:context=".View.MyApplyActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/colorTitle">
+        android:background="#a08fd3fd">
 
         <ImageView
             android:id="@+id/myapply_back"
@@ -19,7 +20,7 @@
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/btn_back"/>
+            android:src="@drawable/icon_back"/>
 
         <ImageView
             android:id="@+id/myapply_phone"
@@ -28,7 +29,7 @@
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/icon_phone"/>
+            android:src="@drawable/icon_whitephone"/>
 
         <TextView
             android:id="@+id/details_text_title"
@@ -37,8 +38,9 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="我的申请"
-            android:textColor="@color/colorWhite"
-            android:textSize="40px"/>
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
     </RelativeLayout>
 
     <FrameLayout
@@ -54,7 +56,16 @@
             android:src="@drawable/d2"
             />
 
-        <!--
+        <TextView
+            android:id="@+id/myapply_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:text="无界空间"
+            android:textColor="#fff"
+            android:textSize="20sp"/>
+
         <TextView
             android:id="@+id/myapply_price"
             android:layout_width="wrap_content"
@@ -62,16 +73,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="90dp"
             android:text="1800元/月"
-            android:textColor="@color/colorWhite"
-            android:textSize="40px"/>-->
-        <TextView
-            android:id="@+id/myapply_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="140dp"
-            android:textColor="@color/colorWhite"
-            android:textSize="40px"/>
+            android:textColor="#fff"
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/myapply_adress"
@@ -79,35 +82,38 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="150dp"
-            android:textColor="@color/colorWhite"
-            android:textSize="40px"
-            android:layout_gravity="left|bottom"/>
+            android:text="朝阳望京南"
+            android:textColor="#fff"
+            android:textSize="20sp"/>
+
+
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#a03da0de">
+        android:layout_weight="1">
 
         <TextView
+            android:background="@drawable/applybutton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="受理状态："
-            android:textColor="@color/colorWhite"
-            android:textSize="40px"/>
+            android:textColor="#fff"
+            android:textSize="20sp"/>
 
         <TextView
+            android:background="@drawable/applybutton"
             android:id="@+id/myapply_state"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-
-            android:textColor="@color/colorWhite"
-            android:textSize="40px"/>
+            android:text="未受理"
+            android:textColor="#fff"
+            android:textSize="20sp"/>
     </LinearLayout>
 
     <TextView

@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="10"
+    android:background="@drawable/icon_applybackground"
     tools:context=".View.ApplyActivity">
 
     <RelativeLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#8FD3FD"
+        android:background="#a08FD3FD"
         >
         <ImageView
             android:id="@+id/apply_back"
@@ -31,34 +32,32 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#fff"/>
-
     </RelativeLayout>
 
-    <TextView
-        android:layout_weight="0.2"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="#d9d3d3"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
         <TextView
-            android:gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:textColor="#000"
+            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:text="@string/applyer"/>
+            android:layout_weight="1"
+            android:text="@string/hsapplyer"
+            android:textSize="18sp"/>
         <EditText
             android:id="@+id/apply_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="7"
-            android:hint="@string/appler_hint"
+            android:layout_weight="1"
+            android:hint="@string/hsappler_hint"
+            android:textColorHint="#a0000000"
+            android:textColor="#000"
+            android:textSize="16sp"
             android:imeOptions="actionNext"
-            android:singleLine="true"/>
+            android:gravity="center"/>
     </LinearLayout>
 
     <LinearLayout
@@ -67,21 +66,26 @@
         android:layout_weight="1">
 
         <TextView
-            android:gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:text="联系电话     :"
+            android:layout_weight="1"
+            android:text="@string/hsapplyertelephonenumber"
+            android:textSize="18sp"
+            android:textColor="#000"
             />
         <EditText
             android:id="@+id/apply_phone"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="7"
-            android:hint="请输入联系方式(必填)"
+            android:layout_weight="1"
+            android:hint="@string/hsphone_hint"
+            android:textColorHint="#a0000000"
+            android:textColor="#000"
+            android:gravity="center"
             android:imeOptions="actionNext"
-            android:phoneNumber="true"/>
+            android:phoneNumber="true"
+            android:textSize="16sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -89,92 +93,111 @@
         android:layout_height="0dp"
         android:layout_weight="1">
         <TextView
-            android:gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:text="入驻人数   :"/>
+            android:layout_weight="1"
+            android:text="@string/hsapplyernumber"
+            android:textColor="#000"
+            android:textSize="18sp"/>
         <EditText
             android:id="@+id/apply_num"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="7"
-            android:hint="请输入入住的人数(必填)"
+            android:layout_weight="1"
+            android:hint="@string/hspeoplenumber"
+            android:textColorHint="#a0000000"
+            android:textColor="#000"
+            android:gravity="center"
             android:imeOptions="actionNext"
-            android:numeric="integer"/>
+            android:numeric="integer"
+            android:textSize="16sp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
         <TextView
-            android:gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:text="入驻时间  :"/>
+            android:layout_weight="1"
+            android:text="@string/hsapplyertime"
+            android:textSize="18sp"
+            android:textColor="#000"/>
         <EditText
             android:id="@+id/apply_time"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="7"
-            android:hint="入驻时长，按月计(必填)"
+            android:layout_weight="1"
+            android:hint="@string/hstime"
+            android:textColorHint="#a0000000"
+            android:textColor="#000"
+            android:gravity="center"
             android:imeOptions="actionNext"
-            android:numeric="integer"/>
+            android:numeric="integer"
+            android:textSize="16sp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
         <TextView
-            android:gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:text="看房时间 :"/>
+            android:layout_weight="1"
+            android:text="@string/hslooktime"
+            android:textSize="18sp"
+            android:textColor="#000"/>
+
         <EditText
             android:id="@+id/apply_looktime"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="7"
+            android:layout_weight="1"
+            android:hint="@string/hslookhousetime"
+            android:textColorHint="#a0000000"
+            android:textColor="#000"
+            android:gravity="center"
             android:imeOptions="actionNext"
-            android:hint="请填写看房时段(必填)"
-            />
+            android:textSize="16sp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2">
         <TextView
-            android:gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:text="特别说明 ："/>
+            android:layout_weight="1"
+            android:text="@string/hsextre"
+            android:textColor="#000"
+            android:textSize="18sp"/>
         <EditText
             android:id="@+id/apply_extra"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="7"
-            android:ellipsize="end"
-            android:imeOptions="actionNext"
-            android:hint=""/>
+            android:layout_weight="1"
+            android:hint="@string/hswriterextre"
+            android:textColorHint="#a0000000"
+            android:textColor="#000"
+            android:gravity="center"
+            android:textSize="16sp"/>
     </LinearLayout>
 
     <Button
-        android:background="#a7eaa6"
+        android:background="@drawable/applybutton"
         android:id="@+id/apply_submit"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="提交申请"
-        android:textColor="#6c6b6b"
+        android:textColor="#fff"
         android:textStyle="bold"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"/>
 
 
 </LinearLayout>

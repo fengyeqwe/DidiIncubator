@@ -7,13 +7,13 @@
     android:showDividers="middle|end"
     android:divider="@drawable/line"
     android:weightSum="10"
-    tools:context="com.didiincubator.incubator.SetActivity">
-
+              android:background="@drawable/icon_aboutbackground"
+    tools:context=".Activity.SetActivity">
     <RelativeLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#8FD3FD"
+        android:background="#a08FD3FD"
         >
         <ImageView
             android:id="@+id/about_back"
@@ -35,102 +35,113 @@
     </RelativeLayout>
 
     <TextView
-        android:layout_weight="0.2"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="#d9d3d3"/>
-    <TextView
+        android:typeface="monospace"
+        android:textColor="#a0000000"
         android:layout_weight="2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:text="@string/about_text"
         android:textSize="15sp"
+
         />
-    <RelativeLayout
+    <LinearLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <TextView
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="软件版本"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="30dp"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/colorPrimary"
             />
         <TextView
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:typeface="monospace"
+            android:textColor="#000"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:text="1.0.0"
             android:textSize="18sp"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <TextView
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="微信关注"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="30dp"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            />
+            android:textColor="@color/colorPrimary" />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:typeface="monospace"
+            android:textColor="#000"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="               didiincubator"
-            android:textSize="18sp"/>
-    </RelativeLayout>
+            android:text="didiincubator"
+            android:textSize="18sp"
+            android:gravity="center"/>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <TextView
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="客服电话"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="30dp"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            />
+            android:textColor="@color/colorPrimary" />
         <TextView
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:typeface="monospace"
+            android:textColor="#000"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="                18224560133"
-            android:textSize="18sp"/>
-    </RelativeLayout>
+            android:text="18224560133"
+            android:textSize="18sp" />
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="官方网站"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="30dp"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            />
+            android:textColor="@color/colorPrimary" />
         <TextView
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:typeface="monospace"
+            android:textColor="#000"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="                              http://www.didi.com"
-            android:textSize="18sp"/>
-    </RelativeLayout>
+            android:text="http://www.didi.com"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+
 </LinearLayout>

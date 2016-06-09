@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:ptr="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="10"
+              xmlns:ptr="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/icon_applybackground"
+              android:orientation="vertical"
+              android:weightSum="10"
     >
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#8FD3FD"
+        android:background="#a08FD3FD"
         >
         <ImageView
             android:id="@+id/collection_back"
@@ -29,13 +31,15 @@
             android:text="收藏"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:textColor="#fff"
             />
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
-        android:layout_weight="9"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="9">
+
         <ProgressBar
             android:id="@+id/load_progressBar"
             style="@style/progressStyle"
@@ -43,21 +47,23 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             />
+
         <TextView
             android:id="@+id/load_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="正在加载中......"
-            android:textSize="20sp"
             android:layout_below="@+id/load_progressBar"
             android:layout_centerHorizontal="true"
+            android:text="正在加载中......"
+            android:textSize="20sp"
             />
+
         <com.handmark.pulltorefresh.library.PullToRefreshListView
             android:id="@+id/collection_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            ptr:ptrDrawable="@drawable/default_ptr_flip"
             ptr:ptrAnimationStyle="flip"
+            ptr:ptrDrawable="@drawable/default_ptr_flip"
             >
         </com.handmark.pulltorefresh.library.PullToRefreshListView>
     </RelativeLayout>
