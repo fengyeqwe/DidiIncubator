@@ -13,14 +13,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.didiincubator.Adapter.DetailpagerAdapter;
+import com.didiincubator.Beans.BeansDidiDidiNear;
 import com.didiincubator.Beans.Detail;
 import com.didiincubator.Beans.DidiBean;
+import com.didiincubator.Beans.DidiNearBean;
 import com.didiincubator.Beans.GongWei;
 import com.didiincubator.Beans.Pictures;
 import com.didiincubator.R;
@@ -75,16 +78,13 @@ public class DetailActivity extends AppCompatActivity {
     TextView mTvPropertyManagementer;
     @Bind(R.id.tv_traffic_metro)
     TextView mTvTrafficMetro;
-    @Bind(R.id.tv_traffic_metro_time)
-    TextView mTvTrafficMetroTime;
+
     @Bind(R.id.tv_traffic_airplane)
     TextView mTvTrafficAirplane;
-    @Bind(R.id.tv_traffic_airplane_time)
-    TextView mTvTrafficAirplaneTime;
+
     @Bind(R.id.tv_traffic_train)
     TextView mTvTrafficTrain;
-    @Bind(R.id.tv_traffic_train_time)
-    TextView mTvTrafficTrainTime;
+
     @Bind(R.id.tv_restaurant_num)
     TextView mTvRestaurantNum;
     @Bind(R.id.tv_hotels_nums)
@@ -151,18 +151,18 @@ public class DetailActivity extends AppCompatActivity {
         QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(DetailActivity.this
                 , "1105330645", "qizrvnP5AuHIs2ks");
         qZoneSsoHandler.addToSocialSDK();
-        mController.setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能");
+        mController.setShareContent(didi.getSketch());
         //设置Qzone分享内容
         QZoneShareContent qzone = new QZoneShareContent();
         //设置分享文字
-        qzone.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能 -- QZone");
+        qzone.setShareContent("来自滴滴孵化器 -- QZone");
 
         //设置点击消息的跳转URL
-        qzone.setTargetUrl("你的URL链接");
+        qzone.setTargetUrl("http://ddfuhuaqi.com");
         //设置分享内容的标题
-        qzone.setTitle("http://ddfuhuaqi.com");
+        qzone.setTitle(didi.getName());
         //设置分享图片
-        qzone.setShareImage(new UMImage(this, R.drawable.app));
+        qzone.setShareImage(new UMImage(this, didi.getHeadPortrait()));
         mController.setShareMedia(qzone);
 
 
@@ -170,25 +170,25 @@ public class DetailActivity extends AppCompatActivity {
 
         QQShareContent qqShareContent = new QQShareContent();
         //设置分享文字
-        qqShareContent.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能 -- QQ");
+        qqShareContent.setShareContent(didi.getSketch());
         //设置分享title
-        qqShareContent.setTitle("hello, title");
+        qqShareContent.setTitle("滴滴孵化器");
         //设置分享图片
-        qqShareContent.setShareImage(new UMImage(this, R.drawable.app));
+        qqShareContent.setShareImage(new UMImage(this, didi.getHeadPortrait()));
         qqShareContent.isMultiMedia();
         //设置点击分享内容的跳转链接
         qqShareContent.setTargetUrl("http://ddfuhuaqi.com");
         mController.setShareMedia(qqShareContent);
 
-        mController.setShareContent(didi.getSketch());
+       // mController.setShareContent(didi.getSketch());
 
         //  mController.setShareMedia(new UMImage(this, "http://www.umeng.com/images/pic/banner_module_social.png"));
         // mController.setShareMedia(new UMusic("http://sns.whalecloud.com/test_music.mp3"));
 //图片
         // UMImage localimage=new UMImage(this,R.drawable.qq);
-        UMImage urlimage = new UMImage(this,"http://o7f489fjp.bkt.clouddn.com/j3.PNG");
-        urlimage.setTitle(didi.getName());
-        mController.setShareImage(urlimage);
+        //UMImage urlimage = new UMImage(this,didi.getHeadPortrait());
+       // urlimage.setTitle(didi.getName());
+       // mController.setShareImage(urlimage);
 
 /*// 设置分享音乐
         UMusic uMusic = new UMusic("http://music.huoxing.com/upload/20130330/1364651263157_1085.mp3");
@@ -236,7 +236,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void getDidi(String id) {
-        String url = MYHTTP+"DidiServlet";
+        String url = MYHTTP+"didiallServlet";
         Request<JSONArray> request = NoHttp.createJsonArrayRequest(url);
         request.add("method", "select");
         request.add("id", id);
@@ -251,9 +251,18 @@ public class DetailActivity extends AppCompatActivity {
             public void onSucceed(int what, Response<JSONArray> response) {
                 Log.e("didi","success");
                 JSONArray result = response.get();
-                ArrayList<DidiBean> didis = gson.fromJson(result.toString(), new TypeToken<List<DidiBean>>() {
+                ArrayList<BeansDidiDidiNear> didis = gson.fromJson(result.toString(), new TypeToken<List<BeansDidiDidiNear>>() {
                 }.getType());
-                didi = didis.get(0);
+                BeansDidiDidiNear beans = didis.get(0);
+                didi=beans.getDidi();
+                DidiNearBean nearBean=beans.getDidiNearBean();
+                mTvTrafficMetro.setText(nearBean.getBus());
+                mTvTrafficAirplane.setText(nearBean.getPlane());
+                mTvTrafficTrain.setText(nearBean.getTrain());
+                mTvRestaurantNum.setText(nearBean.getCt()+"家");
+                mTvHotelsNums.setText(nearBean.getJd()+"家");
+                mTvGymNums.setText(nearBean.getJsf()+"家");
+                mTvBankNums.setText(nearBean.getYh()+"家");
                 Message msg = new Message();
                 msg.what = 0x111;
                 handler.sendMessage(msg);
@@ -394,7 +403,7 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.details_btn_back, R.id.details_btn_collection, R.id.tv_traffic_metro, R.id.tv_traffic_airplane, R.id.tv_traffic_train, R.id.tv_restaurant_num, R.id.tv_hotels_nums, R.id.tv_gym_nums, R.id.tv_bank_nums, R.id.details_phone, R.id.details_message, R.id.details_share, R.id.details_in})
+    @OnClick({R.id.detail_inMap,R.id.details_btn_back, R.id.details_btn_collection, R.id.tv_traffic_metro, R.id.tv_traffic_airplane, R.id.tv_traffic_train, R.id.tv_restaurant_num, R.id.tv_hotels_nums, R.id.tv_gym_nums, R.id.tv_bank_nums, R.id.details_phone, R.id.details_message, R.id.details_share, R.id.details_in})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.details_btn_back:
@@ -406,12 +415,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 break;
             case R.id.tv_traffic_metro:
-                //测试地图
-                Intent intent =new Intent(DetailActivity.this,DetailmapActivity.class);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("didi",didi);
-                intent.putExtras(bundle);
-                startActivity(intent);
+
                 break;
             case R.id.tv_traffic_airplane:
                 break;
@@ -437,6 +441,14 @@ public class DetailActivity extends AppCompatActivity {
                 break;
             case R.id.details_in:
                 goApply();
+                break;
+            case R.id.detail_inMap:
+                //进入地图
+                Intent intent =new Intent(DetailActivity.this,DetailmapActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("didi",didi);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
         }
     }

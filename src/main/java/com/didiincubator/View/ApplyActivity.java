@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,12 +61,11 @@ public class ApplyActivity extends AppCompatActivity implements IApplyView {
     @OnClick({R.id.apply_back, R.id.apply_submit})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.details_btn_back:
+            case R.id.apply_back:
                 ApplyActivity.this.finish();
                 break;
             case R.id.apply_submit:
                 submitApply();
-
                 break;
         }
     }
@@ -100,6 +100,7 @@ public class ApplyActivity extends AppCompatActivity implements IApplyView {
                 mApplyLooktime.getText().length()==0){
             String remind="请信息填写完整后提交";
             Toast.makeText(ApplyActivity.this,remind,Toast.LENGTH_SHORT).show();}else{
+            Log.e("apply+++","start");
             applyPresenter.submit(handler);
         }
 

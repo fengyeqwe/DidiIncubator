@@ -151,7 +151,7 @@ public class DetailmapActivity extends AppCompatActivity {
         @Override
         public void onGetPoiResult(PoiResult poiResult) {
             if ((poiResult == null) || (poiResult.error == SearchResult.ERRORNO.RESULT_NOT_FOUND)) {
-                Toast.makeText(DetailmapActivity.this,"附近无类似建筑",Toast.LENGTH_LONG).show();
+                Toast.makeText(DetailmapActivity.this,"附近无类似建筑",Toast.LENGTH_SHORT).show();
                 return;
             }
             if (poiResult.error == SearchResult.ERRORNO.NO_ERROR) {

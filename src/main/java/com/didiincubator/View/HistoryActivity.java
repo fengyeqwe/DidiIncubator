@@ -58,7 +58,7 @@ public class HistoryActivity extends AppCompatActivity implements ExpandableList
         //设置刷新加载
         initListener();
         initData();
-        initUpdate();
+      //  initUpdate();
     }
 
     private void initUpdate() {

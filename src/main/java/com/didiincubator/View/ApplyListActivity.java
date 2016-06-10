@@ -18,6 +18,7 @@ import com.didiincubator.Beans.ApplyBean;
 import com.didiincubator.Beans.ApplyListBean;
 import com.didiincubator.Presenter.ApplyListPresenter;
 import com.didiincubator.R;
+import com.didiincubator.listener.ApplyListListener;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -64,7 +65,8 @@ public class ApplyListActivity extends AppCompatActivity implements IApplyListVi
                     Log.e("apply",mList.toString());
                     myadapter = new ApplyAdapter(ApplyListActivity.this, mList);
                     mListView.setAdapter(myadapter);
-
+//长按事件
+                    new ApplyListListener(ApplyListActivity.this,mListView,myadapter,mList).ListenerLong();
 
                 }
             }
@@ -80,6 +82,7 @@ public class ApplyListActivity extends AppCompatActivity implements IApplyListVi
                 ApplyListActivity.this.finish();
             }
         });
+
         //设置下拉监听事件
         mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -101,7 +104,9 @@ public class ApplyListActivity extends AppCompatActivity implements IApplyListVi
                 new ApplyListTask().execute();
             }
         });
+
         //单击item跳转
+
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -110,6 +115,7 @@ public class ApplyListActivity extends AppCompatActivity implements IApplyListVi
                 startActivity(intent);
             }
         });
+
     }
 
 

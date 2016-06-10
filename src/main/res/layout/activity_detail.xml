@@ -311,7 +311,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="10.0dip"
                 android:background="#ffe5e5e5"/>
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -319,7 +322,17 @@
                 android:text="交通"
                 android:textColor="#ff73aec0"
                 android:textSize="20.0sp"/>
-
+    <Button
+        android:id="@+id/detail_inMap"
+        android:layout_width="wrap_content"
+        android:layout_margin="10.0dip"
+        android:layout_height="wrap_content"
+        android:text="进入地图"
+        android:textSize="20.0sp"
+        android:textColor="#ff73aec0"
+        android:background="#00000000"
+        />
+</LinearLayout>
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -347,35 +360,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="距"
+                        android:text="最近公交站"
                         android:textColor="#ff959595"/>
 
                     <TextView
                         android:id="@+id/tv_traffic_metro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10.0dip"
                         android:text="未知站"
                         android:textColor="#ff87b8c9"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20.0dip"
-                        android:text="步行"
-                        android:textColor="#ff959595"/>
 
-                    <TextView
-                        android:id="@+id/tv_traffic_metro_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="\ 0"
-                        android:textColor="#ff959595"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="分钟"
-                        android:textColor="#ff959595"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -407,35 +403,17 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="距"
+                        android:text="最近机场"
                         android:textColor="#ff959595"/>
 
                     <TextView
                         android:id="@+id/tv_traffic_airplane"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10.0dip"
                         android:text="未知机场"
                         android:textColor="#ff87b8c9"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20.0dip"
-                        android:text="驾车约"
-                        android:textColor="#ff959595"/>
-
-                    <TextView
-                        android:id="@+id/tv_traffic_airplane_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="\ 0"
-                        android:textColor="#ff959595"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="分钟"
-                        android:textColor="#ff959595"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -467,35 +445,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="距"
+                        android:text="最近地铁站"
                         android:textColor="#ff959595"/>
 
                     <TextView
                         android:id="@+id/tv_traffic_train"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="未知高铁站"
+                        android:layout_marginLeft="10.0dip"
+                        android:text="未知地铁站"
                         android:textColor="#ff87b8c9"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20.0dip"
-                        android:text="驾车约"
-                        android:textColor="#ff959595"/>
 
-                    <TextView
-                        android:id="@+id/tv_traffic_train_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="\ 0"
-                        android:textColor="#ff959595"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="驾分钟"
-                        android:textColor="#ff959595"/>
                 </LinearLayout>
             </LinearLayout>
 
